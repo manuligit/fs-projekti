@@ -33,4 +33,30 @@ productsRouter.post('/', async (request, response) => {
   }
 })
 
+productsRouter.put('/:id', async (request, response) => {
+  try {
+    const body = request.body
+    Product.findByIdAndUpdate(request.params.id, 
+      { name: body.name, category: body.category, price: body.price },
+      { new: true }.price,
+      (err, todo) => { if (err) response.status(500).send(err); return response.send(todo) }
+    )
+  } catch (exception) {
+    console.log(exception.name)
+    response.status(500).json({ error: 'Something broke' })
+  }
+})
+
+productsRouter.delete('/:id', async (request, response) => {
+  try {
+    await Product.findByIdAndRemove(request.params.id)
+    response.status(204).end()
+  } catch (exception) {
+    console.log('productsrouter.delete exception:', exception.name)
+    response.status(400).json({ error: 'invalid id' })
+  }
+})
+
+
+
 module.exports = productsRouter
