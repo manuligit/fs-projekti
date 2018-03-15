@@ -1,15 +1,9 @@
 import React from 'react';
 import Product from './components/Product'
 import productService from './services/products'
+import { initializeProducts } from './reducers/productReducer'
 
 class App extends React.Component {
-  constructor() {
-    super()
-    this.state = {
-      products: []
-    }
-  }
-
   async componentDidMount() {
     const products = await productService.getAll()
     console.log('mounted, got products', products)
@@ -30,18 +24,17 @@ class App extends React.Component {
           price: 6.99
         }
       ]
-      
+
       this.setState({ products: products })
     } 
   }
-
 
   render() {
     return (
       <div className="App">
         <h1>Tuotteet</h1>
         <ul>
-          {this.state.products.map(product => <Product product={product} />)}
+          {this.state.products.map(product => <Product key={product.id} product={product} />)}
         </ul>
       </div>
     );
