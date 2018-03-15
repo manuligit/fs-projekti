@@ -1,18 +1,48 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import Product from './components/Product'
+import productService from './services/products'
 
-class App extends Component {
+class App extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+      products: []
+    }
+  }
+
+  async componentDidMount() {
+    const products = await productService.getAll()
+    console.log('mounted, got products', products)
+    this.setState({ products: products })
+    //if the service returns no products, use dummy data to test:
+    if (this.state.products.length === 0) {
+      const products = [
+        {
+          id: 1,
+          name: 'Leipajuusto',
+          category: 'juustot',
+          price: 5.99
+        },
+        {
+          id: 2,
+          name: 'Homejuusto',
+          category: 'juustot',
+          price: 6.99
+        }
+      ]
+      
+      this.setState({ products: products })
+    } 
+  }
+
+
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <h1>Tuotteet</h1>
+        <ul>
+          {this.state.products.map(product => <Product product={product} />)}
+        </ul>
       </div>
     );
   }
