@@ -5,16 +5,15 @@ import { createProduct } from '../reducers/productReducer'
 class CreateProductForm extends React.Component {
   addProduct = (event) => {
     event.preventDefault()
-    // console.log('click')
-    // console.log(event.target.name.value)
-    // console.log(event.target.category.value)
-    // console.log(event.target.price.value)
     this.props.createProduct(
       event.target.name.value, 
       event.target.category.value,
       Number(event.target.price.value)
     )
     console.log('created item')
+    event.target.name.value = ''
+    event.target.category.value = ''
+    event.target.price.value = ''
   } 
 
   render() {

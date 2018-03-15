@@ -2,7 +2,11 @@ import React from 'react'
 
 const Product = ({ product }) => {
   return (
-    <li>{product.name}</li>
+    <div>
+      <h2>{product.name}</h2>
+      Category: {product.category}
+      Price: {product.price}
+    </div>
   )
 }
 
