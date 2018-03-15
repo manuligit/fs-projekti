@@ -4,7 +4,7 @@ import productReducer from './reducers/productReducer'
 import { composeWithDevTools } from 'redux-devtools-extension'
 
 const store = createStore(
-  productReducer, 
+  productReducer,
   composeWithDevTools(
     applyMiddleware(thunk)
   )

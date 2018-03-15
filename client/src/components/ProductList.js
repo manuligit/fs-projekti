@@ -1,26 +1,23 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import Product from './Product'
 
 class ProductList extends React.Component {
   openDiv = (product) => (event) => {
     event.preventDefault()
     console.log('click', product.id)
-    return (
-      <Product product={product} />
-    )
+    // link to router
   }
 
   render () {
     return (
       <ul>
-        {this.props.products.map(product => 
+        {this.props.products.map(product =>
           <li key={product.id} onClick={this.openDiv(product)}>
             {product.name}
-            </li>
-          )}
+          </li>
+        )}
       </ul>
-    )  
+    )
   }
 }
 

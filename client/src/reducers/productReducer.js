@@ -14,7 +14,7 @@ const productReducer = (state = [], action) => {
 export const initializeProducts = () => {
   return async (dispatch) => {
     const products = await productService.getAll()
-    dispatch({ 
+    dispatch({
       type: 'INIT',
       data: products
     })
@@ -23,7 +23,7 @@ export const initializeProducts = () => {
 
 export const createProduct = (name, category, price) => {
   return async (dispatch) => {
-    const content = { name: name, category: category, price: price}
+    const content = { name: name, category: category, price: price }
     const newProduct = await productService.create(content)
     console.log('productreducer newProduct:', newProduct)
     dispatch({
