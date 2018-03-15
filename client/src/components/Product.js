@@ -5,7 +5,8 @@ const Product = ({ product }) => {
     <div>
       <h2>{product.name}</h2>
       Category: {product.category} <br />
-      Price: {product.price}
+      Price: {product.price} <br />
+      <button>delete</button>
     </div>
   )
 }

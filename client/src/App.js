@@ -1,10 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import { initializeProducts } from './reducers/productReducer'
+import Home from './components/Home'
 import Product from './components/Product'
 import ProductList from './components/ProductList'
 import CreateProductForm from './components/CreateProductForm'
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom'
 
 class App extends React.Component {
   async componentDidMount() {
@@ -28,10 +29,13 @@ class App extends React.Component {
               <Link to="/products/new">new product</Link>
             </div>
               <h1>Tuotteet</h1>
-              <Route exact path="/products" render={() => <ProductList />} />
-              <Route exact path="/products/new" render={() => <CreateProductForm />} />
-              <Route exact path="/products/:id" render={({match}) =>
-                <Product product={productById(match.params.id)} />} /> 
+              <Switch>
+                <Route exact path="/" render={() => <Home />} />
+                <Route exact path="/products" render={() => <ProductList />} />
+                <Route exact path="/products/new" render={() => <CreateProductForm />} />
+                <Route exact path="/products/:id" render={({match}) =>
+                  <Product product={productById(match.params.id)} />} /> 
+              </Switch>
           </div>
         </Router>
       </div>
@@ -48,7 +52,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
   initializeProducts
 }
-
 
 export default connect (
   mapStateToProps, mapDispatchToProps

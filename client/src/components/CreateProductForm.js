@@ -5,15 +5,19 @@ import { createProduct } from '../reducers/productReducer'
 class CreateProductForm extends React.Component {
   addProduct = (event) => {
     event.preventDefault()
-    this.props.createProduct(
-      event.target.name.value,
-      event.target.category.value,
-      Number(event.target.price.value)
-    )
-    console.log('created item')
-    event.target.name.value = ''
-    event.target.category.value = ''
-    event.target.price.value = ''
+    if (Number(event.target.price.value)) {
+      this.props.createProduct(
+        event.target.name.value,
+        event.target.category.value,
+        Number(event.target.price.value)
+      )
+      event.target.name.value = ''
+      event.target.category.value = ''
+      event.target.price.value = ''
+    } else {
+      //if the price is not a valid number, don't post item at all
+      event.target.price.value = ''
+    }
   }
 
   render() {
