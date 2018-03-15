@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import { initializeProducts } from './reducers/productReducer'
-import ConnectedProductList from './components/ProductList'
+import ProductList from './components/ProductList'
+import CreateProductForm from './components/CreateProductForm'
 
 class App extends React.Component {
   async componentDidMount() {
@@ -12,7 +13,8 @@ class App extends React.Component {
     return (
       <div className="App">
         <h1>Tuotteet</h1>
-        <ConnectedProductList />
+        <ProductList />
+        <CreateProductForm />
       </div>
     );
   }

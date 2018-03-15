@@ -1,4 +1,5 @@
 import productService from '../services/products'
+import Product from '../components/Product';
 
 const productReducer = (state = [], action) => {
   switch (action.type) {
@@ -17,6 +18,17 @@ export const initializeProducts = () => {
     dispatch({ 
       type: 'INIT',
       data: products
+    })
+  }
+}
+
+export const createProduct = (content) => {
+  return async (dispatch) => {
+    const newProduct = await productService.create(content)
+    console.log('productreducer newProduct:', newProduct)
+    dispatch({
+      type: 'NEW_PRODUCT',
+      data: newProduct
     })
   }
 }

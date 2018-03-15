@@ -18,8 +18,6 @@ const mapStateToProps = (state) => {
   }
 }
 
-const ConnectedProductList = connect(
+export default connect(
   mapStateToProps, null
 )(ProductList)
-
-export default ConnectedProductList
