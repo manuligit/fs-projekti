@@ -3,12 +3,6 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 
 class ProductList extends React.Component {
-  openDiv = (product) => (event) => {
-    event.preventDefault()
-    console.log('click', product.id)
-    // link to router
-  }
-
   render () {
     return (
       <ul>
@@ -24,7 +18,7 @@ class ProductList extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    products: state
+    products: state.products
   }
 }
 

@@ -13,7 +13,11 @@ class App extends React.Component {
 
   render() {
     const productById = (id) => this.props.products.find(item => item.id === id)
-    console.log(this.props.products)
+    //<Route exact path="/products/:id" render={({match}) =>
+    //<Product product={productById(match.params.id)} />} /> 
+    
+    //console.log(this.props.products)
+
     return (
       <div className="App">
         <Router>
@@ -41,7 +45,11 @@ const mapStateToProps = (state) => {
   }
 }
 
+const mapDispatchToProps = {
+  initializeProducts
+}
+
+
 export default connect (
-  mapStateToProps,
-  { initializeProducts }
+  mapStateToProps, mapDispatchToProps
 )(App)
