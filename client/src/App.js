@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import { initializeProducts } from './reducers/productReducer'
 import ProductList from './components/ProductList'
 import CreateProductForm from './components/CreateProductForm'
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+
 
 class App extends React.Component {
   async componentDidMount() {
@@ -12,9 +14,18 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <h1>Tuotteet</h1>
-        <ProductList />
-        <CreateProductForm />
+        <Router>
+          <div>
+            <div>
+              <Link to="/">home</Link> &nbsp;
+              <Link to="/products">products</Link> &nbsp;
+              <Link to="/products/new">new product</Link>
+            </div>
+              <h1>Tuotteet</h1>
+              <Route exact path="/products" render={() => <ProductList />} />
+              <Route exact path="/products/new" render={() => <CreateProductForm />} />
+          </div>
+        </Router>
       </div>
     );
   }
