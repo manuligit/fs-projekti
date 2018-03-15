@@ -2,7 +2,7 @@ POST http://localhost:3001/api/products
 content-type: application/json
 
 {
-  "name": "Edam-juusto",
-  "category": "Juustot",
-  "price": 5.99
+  "name": "Herkkutatti",
+  "category": "Sienet",
+  "price": 3.99
 }
