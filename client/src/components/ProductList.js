@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 
 class ProductList extends React.Component {
   openDiv = (product) => (event) => {
@@ -12,8 +13,8 @@ class ProductList extends React.Component {
     return (
       <ul>
         {this.props.products.map(product =>
-          <li key={product.id} onClick={this.openDiv(product)}>
-            {product.name}
+          <li key={product.id}>
+            <Link to={`/products/${product.id}`}>{product.name}</Link>
           </li>
         )}
       </ul>

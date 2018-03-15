@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import { initializeProducts } from './reducers/productReducer'
+import Product from './components/Product'
 import ProductList from './components/ProductList'
 import CreateProductForm from './components/CreateProductForm'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
-
 
 class App extends React.Component {
   async componentDidMount() {
@@ -12,6 +12,8 @@ class App extends React.Component {
   }
 
   render() {
+    const productById = (id) => this.props.products.find(item => item.id === id)
+    console.log(this.props.products)
     return (
       <div className="App">
         <Router>
@@ -24,6 +26,8 @@ class App extends React.Component {
               <h1>Tuotteet</h1>
               <Route exact path="/products" render={() => <ProductList />} />
               <Route exact path="/products/new" render={() => <CreateProductForm />} />
+              <Route exact path="/products/:id" render={({match}) =>
+                <Product product={productById(match.params.id)} />} /> 
           </div>
         </Router>
       </div>
@@ -31,7 +35,13 @@ class App extends React.Component {
   }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    products: state.products
+  }
+}
+
 export default connect (
-  null,
+  mapStateToProps,
   { initializeProducts }
 )(App)
