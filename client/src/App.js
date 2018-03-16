@@ -16,10 +16,9 @@ class App extends React.Component {
 
   render() {
     const productById = (id) => this.props.products.find(item => item.id === id)
-    
+
     //console.log(this.props.products)
-    console.log('hello app.js')
-    console.log(this.props.products)
+    //Do not render single product screen unless the props are fully loaded
     return (
       <div className="App">
         <Router>

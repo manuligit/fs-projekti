@@ -39,10 +39,10 @@ export const createProduct = (name, category, price) => {
   }
 }
 
-export const updateProduct = (name, category, price) => {
+export const updateProduct = (id, name, category, price) => {
   return async (dispatch) => {
     const content = { name: name, category: category, price: price }
-    const updatedProduct = await productService.update(content)
+    const updatedProduct = await productService.update(id, content)
     console.log('productreducer updateProduct', updatedProduct)
 
     dispatch({
