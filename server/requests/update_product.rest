@@ -1,0 +1,8 @@
+PUT http://localhost:3001/api/products/5aaaaccb64d7fc24e6b81b43
+content-type: application/json
+
+{
+    "name":"Kananmuna",
+    "category": "kananmunat",
+    "price": 10
+}
