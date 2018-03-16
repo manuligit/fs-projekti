@@ -5,7 +5,6 @@ const cors = require('cors')
 const mongoose = require('mongoose')
 const productsRouter = require('./controllers/products')
 const middleware = require('./utils/middleware')
-var path = require('path')
 require('dotenv').config()
 
 if ( process.env.NODE_ENV !== 'production' ) {
