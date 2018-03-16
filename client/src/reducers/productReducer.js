@@ -48,7 +48,6 @@ export const updateProduct = (id, name, category, price) => {
     const content = { name: name, category: category, price: price }
     const updatedProduct = await productService.update(id, content)
     //console.log('productreducer updateProduct', updatedProduct)
-
     dispatch({
       type: 'UPDATE_LIST',
       data: updatedProduct

@@ -3,10 +3,15 @@ import Togglable from './Togglable'
 import EditProductForm from './EditProductForm'
 
 const Product = ({ product, deleteProduct, history }) => {
-  const onClick = (event) => {
+  const onClick = async (event) => {
     event.preventDefault()
     deleteProduct(product.id)
-    history.push('/products')
+      .then((response) => {
+        console.log(response)
+        history.push('/products')
+      }, (error) => {
+        console.log(error)
+      })
   }
 
   console.log(product)
