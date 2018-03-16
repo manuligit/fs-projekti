@@ -14,6 +14,8 @@ const productReducer = (state = [], action) => {
       //console.log([...old, action.data])
       return [...old, action.data]
     }
+    case 'DELETE_ITEM':
+      return state.filter(a => a.id !== action.data.id)
     default:
       return state
   }
@@ -50,6 +52,16 @@ export const updateProduct = (id, name, category, price) => {
     dispatch({
       type: 'UPDATE_LIST',
       data: updatedProduct
+    })
+  }
+}
+
+export const deleteProduct = (id) => {
+  return async (dispatch) => {
+    await productService.remove(id)
+    dispatch({
+      type: 'DELETE_ITEM',
+      data: id
     })
   }
 }

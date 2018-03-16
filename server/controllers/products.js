@@ -36,7 +36,7 @@ productsRouter.post('/', async (request, response) => {
 productsRouter.put('/:id', async (request, response) => {
   try {
     const body = request.body
-    console.log(body)
+    //console.log(body)
     Product.findByIdAndUpdate(request.params.id, 
       { name: body.name, category: body.category, price: body.price },
       { new: true },

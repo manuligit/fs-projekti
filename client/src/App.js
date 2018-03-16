@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux'
-import { initializeProducts } from './reducers/productReducer'
+import { initializeProducts, deleteProduct } from './reducers/productReducer'
 import Home from './components/Home'
 import Product from './components/Product'
 import ProductList from './components/ProductList'
@@ -33,8 +33,8 @@ class App extends React.Component {
                 <Route exact path="/" render={() => <Home />} />
                 <Route exact path="/products" render={() => <ProductList />} />
                 <Route exact path="/products/new" render={() => <CreateProductForm />} />
-                {this.props.products.length > 0 && <Route exact path="/products/:id" render={({match}) =>
-                <Product product={productById(match.params.id)} />} /> }
+                {this.props.products.length > 0 && <Route exact path="/products/:id" render={({match, history}) =>
+                <Product product={productById(match.params.id)} deleteProduct={this.props.deleteProduct} history={history} />} /> }
               </Switch>
           </div>
         </Router>
@@ -50,7 +50,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-  initializeProducts
+  initializeProducts, deleteProduct
 }
 
 export default connect (
