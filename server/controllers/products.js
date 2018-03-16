@@ -39,8 +39,11 @@ productsRouter.put('/:id', async (request, response) => {
     console.log(body)
     Product.findByIdAndUpdate(request.params.id, 
       { name: body.name, category: body.category, price: body.price },
-      { new: true }.price,
-      (err, todo) => { if (err) response.status(500).send(err); return response.send(todo) }
+      { new: true },
+      (err, todo) => { 
+        if (err) response.status(500).send(err); 
+        return response.json(Product.format(todo)) 
+      }
     )
   } catch (exception) {
     console.log(exception)
@@ -57,7 +60,5 @@ productsRouter.delete('/:id', async (request, response) => {
     response.status(400).json({ error: 'invalid id' })
   }
 })
-
-
 
 module.exports = productsRouter

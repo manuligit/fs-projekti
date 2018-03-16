@@ -7,10 +7,12 @@ const productReducer = (state = [], action) => {
     case 'NEW_PRODUCT':
       return [...state, action.data]
     case 'UPDATE_LIST': {
-      //const old = state.filter(a => a.id !== action.id)
-      const item = state.find(a => a.id === action.id)
-      //const newlist = item.filter(a => a.id === action.id ? a = action.data)
-      return [...state, item: action.data ]
+      const old = state.filter(a => a.id !== action.data.id)
+      //console.log('prodreducer')
+      //console.log(old)
+      //console.log(action.data)
+      //console.log([...old, action.data])
+      return [...old, action.data]
     }
     default:
       return state
@@ -43,7 +45,7 @@ export const updateProduct = (id, name, category, price) => {
   return async (dispatch) => {
     const content = { name: name, category: category, price: price }
     const updatedProduct = await productService.update(id, content)
-    console.log('productreducer updateProduct', updatedProduct)
+    //console.log('productreducer updateProduct', updatedProduct)
 
     dispatch({
       type: 'UPDATE_LIST',

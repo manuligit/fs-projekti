@@ -12,11 +12,8 @@ class EditProductForm extends React.Component {
         event.target.category.value,
         Number(event.target.price.value)
       )
-      event.target.name.value = ''
-      event.target.category.value = ''
-      event.target.price.value = ''
     } else {
-      //if the price is not a valid number, don't post item at all
+      //if the price is not a valid number, don't update item
       event.target.price.value = ''
     }
   }
@@ -30,7 +27,7 @@ class EditProductForm extends React.Component {
           <div> Category <input name="category" defaultValue={this.props.product.category}/> </div>
           <div> Price <input name="price" defaultValue={this.props.product.price} /> </div>
           <button>Edit</button>
-        </form>
+        </form> <br />
       </div>
     )
   }
