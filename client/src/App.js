@@ -5,7 +5,7 @@ import Home from './components/Home'
 import Product from './components/Product'
 import ProductList from './components/ProductList'
 import CreateProductForm from './components/CreateProductForm'
-import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Link, Switch, Redirect } from 'react-router-dom'
 
 class App extends React.Component {
   componentWillMount() {
@@ -33,8 +33,12 @@ class App extends React.Component {
                 <Route exact path="/" render={() => <Home />} />
                 <Route exact path="/products" render={() => <ProductList />} />
                 <Route exact path="/products/new" render={() => <CreateProductForm />} />
-                {this.props.products.length > 0 && <Route exact path="/products/:id" render={({match, history}) =>
-                <Product product={productById(match.params.id)} deleteProduct={this.props.deleteProduct} history={history} />} /> }
+                {this.props.products.length > 0 && 
+                  <Route exact path="/products/:id" render={({match, history}) =>
+                    productById(match.params.id) 
+                    ? <Product product={productById(match.params.id)} deleteProduct={this.props.deleteProduct} history={history} /> 
+                    : <Redirect to="/products" />
+                } /> }
               </Switch>
           </div>
         </Router>
