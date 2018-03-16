@@ -8,17 +8,18 @@ import CreateProductForm from './components/CreateProductForm'
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom'
 
 class App extends React.Component {
-  async componentDidMount() {
+  componentWillMount() {
+    console.log('mounted')
     this.props.initializeProducts()
+    console.log(this.props.products)
   }
 
   render() {
     const productById = (id) => this.props.products.find(item => item.id === id)
-    //<Route exact path="/products/:id" render={({match}) =>
-    //<Product product={productById(match.params.id)} />} /> 
     
     //console.log(this.props.products)
-
+    console.log('hello app.js')
+    console.log(this.props.products)
     return (
       <div className="App">
         <Router>
@@ -33,8 +34,8 @@ class App extends React.Component {
                 <Route exact path="/" render={() => <Home />} />
                 <Route exact path="/products" render={() => <ProductList />} />
                 <Route exact path="/products/new" render={() => <CreateProductForm />} />
-                <Route exact path="/products/:id" render={({match}) =>
-                  <Product product={productById(match.params.id)} />} /> 
+                {this.props.products.length > 0 && <Route exact path="/products/:id" render={({match}) =>
+                <Product product={productById(match.params.id)} />} /> }
               </Switch>
           </div>
         </Router>

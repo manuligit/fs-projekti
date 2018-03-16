@@ -5,6 +5,7 @@ const cors = require('cors')
 const mongoose = require('mongoose')
 const productsRouter = require('./controllers/products')
 const middleware = require('./utils/middleware')
+const path = require('path')
 require('dotenv').config()
 
 if ( process.env.NODE_ENV !== 'production' ) {
@@ -27,9 +28,9 @@ app.use(express.static('build'))
 app.use(middleware.logger)
 app.use(middleware.error)
 
-//app.get('*', function (req, res) {
-//  res.sendFile(path.join(__dirname, 'index.html'))
-//})
+app.get('*', function (req, res) {
+  res.sendFile(path.join(__dirname, 'index.html'))
+})
 
 const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
