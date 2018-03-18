@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { createProduct } from '../reducers/productReducer'
+import { createNotification } from '../reducers/notificationReducer'
 
 class CreateProductForm extends React.Component {
   addProduct = (event) => {
@@ -11,6 +12,7 @@ class CreateProductForm extends React.Component {
         event.target.category.value,
         Number(event.target.price.value)
       )
+      this.props.createNotification(`Created item ${event.target.name.value} successfully`)
       event.target.name.value = ''
       event.target.category.value = ''
       event.target.price.value = ''
@@ -37,5 +39,5 @@ class CreateProductForm extends React.Component {
 
 export default connect(
   null,
-  { createProduct }
+  { createProduct, createNotification }
 )(CreateProductForm)

@@ -1,7 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import { initializeProducts, deleteProduct } from './reducers/productReducer'
+import { createNotification } from './reducers/notificationReducer'
 import Home from './components/Home'
+import Notification from './components/Notification'
 import Product from './components/Product'
 import ProductList from './components/ProductList'
 import CreateProductForm from './components/CreateProductForm'
@@ -28,6 +30,7 @@ class App extends React.Component {
               <Link to="/products">products</Link> &nbsp;
               <Link to="/products/new">new product</Link>
             </div>
+              <Notification message={this.props.notification} />
               <h1>Tuotteet</h1>
               <Switch>
                 <Route exact path="/" render={() => <Home />} />
@@ -49,12 +52,13 @@ class App extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    products: state.products
+    products: state.products,
+    notification: state.notification
   }
 }
 
 const mapDispatchToProps = {
-  initializeProducts, deleteProduct
+  initializeProducts, deleteProduct, createNotification
 }
 
 export default connect (

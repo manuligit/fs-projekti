@@ -1,10 +1,12 @@
 import { createStore, applyMiddleware, combineReducers } from 'redux'
 import thunk from 'redux-thunk'
 import productReducer from './reducers/productReducer'
+import notificationReducer from './reducers/notificationReducer'
 import { composeWithDevTools } from 'redux-devtools-extension'
 
 const reducer = combineReducers({
-  products: productReducer
+  products: productReducer,
+  notification: notificationReducer
 })
 
 const store = createStore(

@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { updateProduct } from '../reducers/productReducer'
+import { createNotification } from '../reducers/notificationReducer'
 
 class EditProductForm extends React.Component {
   editProduct = (event) => {
@@ -12,6 +13,7 @@ class EditProductForm extends React.Component {
         event.target.category.value,
         Number(event.target.price.value)
       )
+      this.props.createNotification(`Edited ${event.target.name.value} successfully`)
     } else {
       //if the price is not a valid number, don't update item
       event.target.price.value = ''
@@ -35,5 +37,5 @@ class EditProductForm extends React.Component {
 
 export default connect(
   null,
-  { updateProduct }
+  { updateProduct, createNotification }
 )(EditProductForm)
