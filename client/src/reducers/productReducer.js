@@ -8,14 +8,10 @@ const productReducer = (state = [], action) => {
       return [...state, action.data]
     case 'UPDATE_LIST': {
       const old = state.filter(a => a.id !== action.data.id)
-      //console.log('prodreducer')
-      //console.log(old)
-      //console.log(action.data)
-      //console.log([...old, action.data])
       return [...old, action.data]
     }
     case 'DELETE_ITEM':
-      return state.filter(a => a.id !== action.data.id)
+      return state.filter(a => a.id !== action.data)
     default:
       return state
   }

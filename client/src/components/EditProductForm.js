@@ -6,12 +6,17 @@ import { createNotification } from '../reducers/notificationReducer'
 class EditProductForm extends React.Component {
   editProduct = (event) => {
     event.preventDefault()
-    if (Number(event.target.price.value)) {
+
+    //If price contains a comma, replace it with a dot:
+    let price = event.target.price.value
+    price = price.replace(',', '.')
+
+    if (Number(price)) {
       this.props.updateProduct(
         this.props.product.id,
         event.target.name.value,
         event.target.category.value,
-        Number(event.target.price.value)
+        Number(price)
       )
       this.props.createNotification(`Edited ${event.target.name.value} successfully`)
     } else {

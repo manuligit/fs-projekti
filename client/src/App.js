@@ -39,7 +39,8 @@ class App extends React.Component {
                 {this.props.products.length > 0 && 
                   <Route exact path="/products/:id" render={({match, history}) =>
                     productById(match.params.id) 
-                    ? <Product product={productById(match.params.id)} deleteProduct={this.props.deleteProduct} history={history} /> 
+                    ? <Product product={productById(match.params.id)} deleteProduct={this.props.deleteProduct}
+                               history={history} createNotification={this.props.createNotification}/> 
                     : <Redirect to="/products" />
                 } /> }
               </Switch>

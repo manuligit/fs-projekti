@@ -6,11 +6,16 @@ import { createNotification } from '../reducers/notificationReducer'
 class CreateProductForm extends React.Component {
   addProduct = (event) => {
     event.preventDefault()
-    if (Number(event.target.price.value)) {
+
+    //If price contains commas, replace them with dot:
+    let price = event.target.price.value
+    price = price.replace(',', '.')
+
+    if (Number(price)) {
       this.props.createProduct(
         event.target.name.value,
         event.target.category.value,
-        Number(event.target.price.value)
+        Number(price)
       )
       this.props.createNotification(`Created item ${event.target.name.value} successfully`)
       event.target.name.value = ''

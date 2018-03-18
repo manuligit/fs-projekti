@@ -5,7 +5,7 @@ const Notification = ({ message }) => {
     console.log('message', message)
     const errorStyle = {
       border: 'solid 4px',
-      color: '#f00'
+      color: '#8AC3D4'
     }
     return (
       <div style={errorStyle}>{message}</div>

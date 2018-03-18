@@ -2,16 +2,21 @@ import React from 'react'
 import Togglable from './Togglable'
 import EditProductForm from './EditProductForm'
 
-const Product = ({ product, deleteProduct, history }) => {
+const Product = ({ product, deleteProduct, history, createNotification }) => {
   const onClick = async (event) => {
     event.preventDefault()
-    deleteProduct(product.id)
-      .then((response) => {
-        console.log(response)
-        history.push('/products')
-      }, (error) => {
-        console.log(error)
-      })
+    //Confirm that the user wants to delete the item
+    const result = window.confirm(`Are you sure you want to delete ${product.name}?`)
+    if (result) {
+      deleteProduct(product.id)
+        .then((response) => {
+          console.log(response)
+          createNotification(`${product.name} deleted successfully`)
+          history.push('/products')
+        }, (error) => {
+          console.log(error)
+        })
+    }
   }
 
   console.log(product)
