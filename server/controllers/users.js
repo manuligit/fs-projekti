@@ -52,5 +52,23 @@ usersRouter.put('/:id', async (request, response) => {
   }
 })
 
+usersRouter.delete('/:id', async (request, response) => {
+  try {
+    const body = request.body
+    const removeUser = await User.findById(request.params.id)
+
+    //Only same user can request deletion that the created account:
+    if (removeUser.id === body.id) {
+      await User.findByIdAndRemove(request.params.id)
+      response.status(204).end()
+    } else {
+      return response.status(400).json({ error: 'User could not be deleted' })
+    }
+
+  } catch (exception) {
+    console.log(exception)
+    response.status(500).json({ error: 'Something went wrong.' })
+  }
+})
 
 module.exports = usersRouter
