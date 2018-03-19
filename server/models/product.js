@@ -3,7 +3,10 @@ const mongoose = require('mongoose')
 const productSchema = new mongoose.Schema ({
   name: { type: String, required: true },
   category: String,
-  price: Number
+  price: Number,
+  weigth: Number,
+  unitprice: Number,
+  unit: String
 })
 
 productSchema.statics.format = (product) => {
@@ -11,7 +14,10 @@ productSchema.statics.format = (product) => {
     id: product.id,
     name: product.name,
     category: product.category,
-    price: product.price
+    price: product.price,
+    weigth: product.weigth,
+    unitprice: product.unitprice,
+    unit: product.unit
   }
 }
 

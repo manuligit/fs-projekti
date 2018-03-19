@@ -1,0 +1,9 @@
+POST http://localhost:3001/api/shops
+content-type: application/json
+
+{
+    "name": "LIDL Kamppi",
+    "address": "Kampinkuja 2",
+    "postalCode": "00100",
+    "city": "Helsinki"
+}
