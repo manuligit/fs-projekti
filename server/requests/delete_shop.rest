@@ -1,0 +1,1 @@
+DELETE http://localhost:3001/api/shops/5aafa60501e37d9f386df7b9

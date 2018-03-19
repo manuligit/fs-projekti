@@ -37,12 +37,12 @@ productsRouter.put('/:id', async (request, response) => {
   try {
     const body = request.body
     //console.log(body)
-    Product.findByIdAndUpdate(request.params.id, 
+    Product.findByIdAndUpdate(request.params.id,
       { name: body.name, category: body.category, price: body.price },
       { new: true },
-      (err, todo) => { 
-        if (err) response.status(500).send(err); 
-        return response.json(Product.format(todo)) 
+      (err, todo) => {
+        if (err) { response.status(500).send(err) }
+        return response.json(Product.format(todo))
       }
     )
   } catch (exception) {

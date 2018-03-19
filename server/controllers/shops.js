@@ -24,7 +24,6 @@ shopsRouter.get('/:id', async (request, response) => {
 shopsRouter.post('/', async (request, response) => {
   try {
     const body = request.body
-    
     const shop = new Shop({
       name: body.name,
       address: body.address,
@@ -45,19 +44,17 @@ shopsRouter.post('/', async (request, response) => {
 shopsRouter.put('/:id', async (request, response) => {
   try {
     const body = request.body
-    Shop.findByIdAndUpdate(
-      request.params.id,
-      { 
-        name: body.name,
+    //console.log(request.body)
+    Shop.findByIdAndUpdate(request.params.id,
+      { name: body.name,
         address: body.address,
         postalCode: body.postalCode,
         city: body.city,
-        chain: body.chain
-      }), { new: true },
-      (err, done) => {
-        if (err) response.status(500).send(err);
-        return response.json(Product.format(done))
-      }
+        chain: body.chain }, { new: true },
+      (err, todo) => {
+        if (err) { response.status(500).send(err) }
+        return response.json(Shop.format(todo))
+      })
   } catch (exception) {
     console.log(exception)
     response.status(500).json({ error: 'Something went wrong' })

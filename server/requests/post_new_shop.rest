@@ -5,5 +5,6 @@ content-type: application/json
     "name": "LIDL Kamppi",
     "address": "Kampinkuja 2",
     "postalCode": "00100",
-    "city": "Helsinki"
+    "city": "Helsinki",
+    "chain": "Lidl"
 }

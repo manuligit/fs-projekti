@@ -7,6 +7,7 @@ const productsRouter = require('./controllers/products')
 const shopsRouter = require('./controllers/shops')
 const middleware = require('./utils/middleware')
 const path = require('path')
+const morgan = require('morgan')
 require('dotenv').config()
 
 if ( process.env.NODE_ENV !== 'production' ) {
@@ -24,11 +25,16 @@ mongoose
 
 app.use(cors())
 app.use(bodyParser.json())
+
+
+morgan.token('json', function(req) { return JSON.stringify(req.body) })
+app.use(morgan(':method :url :json :status :res[content-length] :response-time ms'))
+
 app.use('/api/products', productsRouter)
 app.use('/api/shops', shopsRouter)
 app.use(express.static('build'))
-app.use(middleware.logger)
 app.use(middleware.error)
+
 
 app.get('*', function (req, res) {
   res.sendFile(path.join(__dirname, 'index.html'))

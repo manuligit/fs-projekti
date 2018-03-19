@@ -1,8 +1,8 @@
-PUT http://localhost:3001/api/products/5aaaaccb64d7fc24e6b81b43
+PUT http://localhost:3001/api/products/5aaec80ac50ef74542f7f6ee
 content-type: application/json
 
 {
-    "name":"Kananmuna",
-    "category": "kananmunat",
-    "price": 10
+    "name": "Juhlamokka",
+    "category": "Kahvit",
+    "price": 1
 }
