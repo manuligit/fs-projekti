@@ -3,10 +3,20 @@ const Product = require('../models/product')
 
 productsRouter.get('/', async (request, response) => {
   try {
-    const products = await Product.find({})
+    const products = await Product.find({}).populate('shops', { id: 1, name: 1, chain: 1 })
     response.json(products.map(Product.format))
   } catch (exception) {
     console.log('productsRouter error:',exception.name)
+    response.status(400).send({ error: 'something went wrong' })
+  }
+})
+
+productsRouter.get('/:id', async (request, response) => {
+  try {
+    const product = await Product.findById(request.params.id).populate('shops')
+    response.json(Product.format(product))
+  } catch (exception) {
+    console.log('productsRouter error:', exception.name)
     response.status(400).send({ error: 'something went wrong' })
   }
 })
@@ -38,7 +48,7 @@ productsRouter.put('/:id', async (request, response) => {
     const body = request.body
     //console.log(body)
     Product.findByIdAndUpdate(request.params.id,
-      { name: body.name, category: body.category, price: body.price },
+      { name: body.name, category: body.category, price: body.price, shops: body.shops },
       { new: true },
       (err, todo) => {
         if (err) { response.status(500).send(err) }

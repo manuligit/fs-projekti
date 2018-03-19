@@ -4,5 +4,6 @@ content-type: application/json
 {
     "name": "Juhlamokka",
     "category": "Kahvit",
-    "price": 1
+    "price": 1,
+    "shops": ["5aafa61601e37d9f386df7ba"]
 }

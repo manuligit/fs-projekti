@@ -59,7 +59,6 @@ shopsRouter.put('/:id', async (request, response) => {
     console.log(exception)
     response.status(500).json({ error: 'Something went wrong' })
   }
-
 })
 
 shopsRouter.delete('/:id', async (request, response) => {

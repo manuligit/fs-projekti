@@ -5,7 +5,8 @@ const shopSchema = new mongoose.Schema ({
   address: String,
   postalCode: String,
   city: String,
-  chain: String
+  chain: String,
+  products: [{ type: mongoose.Schema.Types.ObjectId, ref:'Product' }]
 })
 
 shopSchema.statics.format = (shop) => {
@@ -15,7 +16,8 @@ shopSchema.statics.format = (shop) => {
     address: shop.address,
     postalCode: shop.postalCode,
     city: shop.city,
-    chain: shop.chain
+    chain: shop.chain,
+    products: shop.products
   }
 }
 
