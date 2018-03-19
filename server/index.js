@@ -6,6 +6,7 @@ const mongoose = require('mongoose')
 const loginRouter = require('./controllers/login')
 const productsRouter = require('./controllers/products')
 const shopsRouter = require('./controllers/shops')
+const usersRouter = require('./controllers/users')
 const middleware = require('./utils/middleware')
 const path = require('path')
 const morgan = require('morgan')
@@ -33,10 +34,13 @@ app.use(morgan(':method :url :json :status :res[content-length] :response-time m
 
 app.use('/api/products', productsRouter)
 app.use('/api/shops', shopsRouter)
-app.use(express.static('build'))
-app.use(middleware.error)
+app.use('/api/users', usersRouter)
 app.use('/api/login', loginRouter)
 
+app.use(express.static('build'))
+app.use(middleware.error)
+
+//catch all for routes:
 app.get('*', function (req, res) {
   res.sendFile(path.join(__dirname, 'index.html'))
 })
