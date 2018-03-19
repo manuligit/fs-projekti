@@ -3,6 +3,7 @@ const app = express()
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const mongoose = require('mongoose')
+const loginRouter = require('./controllers/login')
 const productsRouter = require('./controllers/products')
 const shopsRouter = require('./controllers/shops')
 const middleware = require('./utils/middleware')
@@ -34,7 +35,7 @@ app.use('/api/products', productsRouter)
 app.use('/api/shops', shopsRouter)
 app.use(express.static('build'))
 app.use(middleware.error)
-
+app.use('/api/login', loginRouter)
 
 app.get('*', function (req, res) {
   res.sendFile(path.join(__dirname, 'index.html'))
