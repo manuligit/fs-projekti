@@ -7,4 +7,6 @@
 |       | 3    | Redux, router, backendin ja frontin jatkamista ja perusominaisuuksien tekoa |
 | 16.3. | 3    | Update/Delete säädetty toimimaan frontendin lomakkeen kautta | 
 | 18.3. | 1,5    | Lisätty notifikaatiot, lista toimii kuten pitää ja muita pieniä korjauksia | 
-| yht   | 10,5   | | 
+| 19.3. | 2,5    | Backendin teko kaupoille | 
+|       | 1    | Käyttäjien ja kirjautumisen tekeminen backendiin | 
+| yht   | 15,5   | | 
