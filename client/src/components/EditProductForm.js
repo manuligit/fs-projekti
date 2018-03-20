@@ -28,11 +28,11 @@ class EditProductForm extends React.Component {
   render() {
     return (
       <div>
-        <h3> Edit product info </h3>
+        <h3>Edit product info</h3>
         <form onSubmit={this.editProduct}>
-          <div> Name <input name="name" defaultValue={this.props.product.name}/> </div>
-          <div> Category <input name="category" defaultValue={this.props.product.category}/> </div>
-          <div> Price <input name="price" defaultValue={this.props.product.price} /> </div>
+          <div> Name <input name="name" type="text" defaultValue={this.props.product.name}/> </div>
+          <div> Category <input name="category" type="text" defaultValue={this.props.product.category}/> </div>
+          <div> Price <input name="price" type="number" defaultValue={this.props.product.price} /> </div>
           <button>Edit</button>
         </form> <br />
       </div>

@@ -10,7 +10,6 @@ class CreateProductForm extends React.Component {
     //If price contains commas, replace them with dot:
     let price = event.target.price.value
     price = price.replace(',', '.')
-
     if (Number(price)) {
       this.props.createProduct(
         event.target.name.value,
@@ -32,9 +31,9 @@ class CreateProductForm extends React.Component {
       <div>
         <h3> Create new product </h3>
         <form onSubmit={this.addProduct}>
-          <div> Name <input name="name" /> </div>
-          <div> Category <input name="category" /> </div>
-          <div> Price <input name="price" /> </div>
+          <div> Name <input type="text" name="name" /> </div>
+          <div> Category <input type="text" name="category" /> </div>
+          <div> Price <input type="number" name="price" /> </div>
           <button>lisää</button>
         </form>
       </div>

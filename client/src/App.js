@@ -2,7 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux'
 import { initializeProducts, deleteProduct } from './reducers/productReducer'
 import { createNotification } from './reducers/notificationReducer'
+import { login } from './reducers/userReducer'
 import Home from './components/Home'
+import LoginForm from './components/LoginForm'
 import Notification from './components/Notification'
 import Product from './components/Product'
 import ProductList from './components/ProductList'
@@ -28,7 +30,8 @@ class App extends React.Component {
             <div>
               <Link to="/">home</Link> &nbsp;
               <Link to="/products">products</Link> &nbsp;
-              <Link to="/products/new">new product</Link>
+              <Link to="/products/new">new product</Link> &nbsp;
+              <Link to="/login">login</Link>
             </div>
               <Notification message={this.props.notification} />
               <h1>Tuotteet</h1>
@@ -43,6 +46,7 @@ class App extends React.Component {
                                history={history} createNotification={this.props.createNotification}/> 
                     : <Redirect to="/products" />
                 } /> }
+                <Route exact path="/login" render={() => <LoginForm login={this.props.login} />} />
               </Switch>
           </div>
         </Router>
@@ -54,12 +58,13 @@ class App extends React.Component {
 const mapStateToProps = (state) => {
   return {
     products: state.products,
-    notification: state.notification
+    notification: state.notification,
+    user: state.user
   }
 }
 
 const mapDispatchToProps = {
-  initializeProducts, deleteProduct, createNotification
+  initializeProducts, deleteProduct, createNotification, login
 }
 
 export default connect (
