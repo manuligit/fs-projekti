@@ -30,8 +30,8 @@ class App extends React.Component {
             <div>
               <Link to="/">home</Link> &nbsp;
               <Link to="/products">products</Link> &nbsp;
-              <Link to="/products/new">new product</Link> &nbsp;
-              <Link to="/login">login</Link>
+    {this.props.user && <Link to="/products/new">new product</Link>}
+              {this.props.user === null && <Link to="/login">login</Link>}
             </div>
               <Notification message={this.props.notification} />
               <h1>Tuotteet</h1>

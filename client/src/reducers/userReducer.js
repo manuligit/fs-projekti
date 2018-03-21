@@ -1,4 +1,5 @@
 import loginService from '../services/login'
+import productService from '../services/products'
 
 const userReducer = (state = null, action) => {
   switch (action.type) {
@@ -6,7 +7,7 @@ const userReducer = (state = null, action) => {
       console.log('logging in', action.data)
       return action.data
     case 'LOGOUT':
-      state=null
+      state = null
       return state
     default:
       return state
@@ -16,6 +17,7 @@ const userReducer = (state = null, action) => {
 export const login = (credentials) => {
   return async (dispatch) => {
     const user = await loginService.login(credentials)
+    productService.setToken(user.token)
     dispatch ({
       type: 'LOGIN',
       data: user
