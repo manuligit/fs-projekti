@@ -27,7 +27,7 @@ mongoose
 
 app.use(cors())
 app.use(bodyParser.json())
-
+app.use(middleware.tokenExtractor)
 
 morgan.token('json', function(req) { return JSON.stringify(req.body) })
 app.use(morgan(':method :url :json :status :res[content-length] :response-time ms'))
