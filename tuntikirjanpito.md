@@ -9,4 +9,5 @@
 | 18.3. | 1,5    | Lisätty notifikaatiot, lista toimii kuten pitää ja muita pieniä korjauksia | 
 | 19.3. | 2,5    | Backendin teko kaupoille | 
 |       | 1    | Käyttäjien ja kirjautumisen tekeminen backendiin | 
+| 20.3. | 1    | Kirjautumislomakkeen luominen ja aloitettu toiminnallisuuden tekeminen frontendiin |
 | yht   | 15,5   | | 
