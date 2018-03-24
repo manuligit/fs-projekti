@@ -32,10 +32,14 @@ export const createProduct = (name, category, price) => {
     const content = { name: name, category: category, price: price }
     const newProduct = await productService.create(content)
     console.log('productreducer newProduct:', newProduct)
-    //also add product to the user in state:
-    //addToProducts(newProduct)
     dispatch({
       type: 'NEW_PRODUCT',
+      data: newProduct
+    })
+
+    //also add product to the user in state:
+    dispatch({
+      type: 'ADDPRODUCT',
       data: newProduct
     })
   }

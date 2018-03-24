@@ -11,5 +11,9 @@
 |       | 1    | Käyttäjien ja kirjautumisen tekeminen backendiin | 
 | 20.3. | 1    | Kirjautumislomakkeen luominen ja aloitettu toiminnallisuuden tekeminen frontendiin |
 | 21.3. | 1    | Autentikoinnin jatkaminen |
-| | | 
-| yht   | 15,5   | | 
+| 24.3. | 1 | Autentikoinnin jatkaminen, käyttäjä pysyy nyt kirjautuneena |
+| 24.3. | 1 | Backendin päivitys (käyttäjän ja tuotteen linkittäminen yhteen) | 
+| | 0,5 | Linkitys toimii myös frontendissä, etusivulle lisätty käyttäjäkohtainen listaus |
+| | 1,5 | Reducereiden + staten päivitystä (käyttäjän lisäämät tuotteet myös käyttäjälle stateen) |
+||||
+| yht   | 20   | | 
