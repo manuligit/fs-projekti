@@ -11,4 +11,5 @@
 |       | 1    | Käyttäjien ja kirjautumisen tekeminen backendiin | 
 | 20.3. | 1    | Kirjautumislomakkeen luominen ja aloitettu toiminnallisuuden tekeminen frontendiin |
 | 21.3. | 1    | Autentikoinnin jatkaminen |
+| | | 
 | yht   | 15,5   | | 
