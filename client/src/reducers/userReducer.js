@@ -11,6 +11,15 @@ const userReducer = (state = null, action) => {
       return state
     case 'AUTHENTICATE':
       return action.data
+    case 'ADDPRODUCT': {
+      console.log('hello')
+      let person = state.user
+      let products = person.addedProducts.slice()
+      products = products.concat(action.data)
+      person.addedProducts = products
+      console.log(person)
+      return person
+    }
     default:
       return state
   }
@@ -44,6 +53,16 @@ export const logout = () => {
     window.localStorage.clear()
     dispatch({
       type: 'LOGOUT'
+    })
+  }
+}
+
+export const addToProducts = (item) => {
+  return (dispatch) => {
+    console.log('userReducer addtoProcute')
+    dispatch({
+      type: 'ADDPRODUCT',
+      data: item
     })
   }
 }
