@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt')
 usersRouter.get('/', async (request, response) => {
   try {
     const users = await User.find({})
-      .populate('products', { name: 1 })
+      .populate('addedProducts', { name: 1 })
     response.json(users.map(User.format))
   } catch (exception) {
     console.log(exception)

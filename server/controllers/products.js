@@ -18,7 +18,10 @@ productsRouter.get('/', async (request, response) => {
 
 productsRouter.get('/:id', async (request, response) => {
   try {
-    const product = await Product.findById(request.params.id).populate('shops')
+    const product = await Product.findById(request.params.id)
+      .populate('shops', { id: 1, name: 1, chain: 1 })
+      .populate('user', { id: 1, username: 1, name: 1 })
+
     response.json(Product.format(product))
   } catch (exception) {
     console.log('productsRouter error:', exception.name)
@@ -54,7 +57,7 @@ productsRouter.post('/', async (request, response) => {
     })
 
     const savedProduct = await product.save()
-    user.addedProducts.concat(savedProduct._id)
+    user.addedProducts = user.addedProducts.concat(savedProduct._id)
     await user.save()
 
     response.json(Product.format(savedProduct))

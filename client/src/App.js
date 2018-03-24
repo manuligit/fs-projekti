@@ -43,7 +43,7 @@ class App extends React.Component {
               <Notification message={this.props.notification} />
               <h1>Tuotteet</h1>
               <Switch>
-                <Route exact path="/" render={() => <Home />} />
+                <Route exact path="/" render={() => <Home user={this.props.user}/>} />
                 <Route exact path="/products" render={() => <ProductList />} />
                 <Route exact path="/products/new" render={() => <CreateProductForm />} />
                 {this.props.products.length > 0 && 
