@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux'
 import { initializeProducts, deleteProduct } from './reducers/productReducer'
 import { createNotification } from './reducers/notificationReducer'
-import { login } from './reducers/userReducer'
+import { login, authenticateUser, logout } from './reducers/userReducer'
 import Home from './components/Home'
 import LoginForm from './components/LoginForm'
 import Notification from './components/Notification'
@@ -16,12 +16,17 @@ class App extends React.Component {
     console.log('mounted')
     this.props.initializeProducts()
     console.log(this.props.products)
+
+    const loggedUserJSON = window.localStorage.getItem('loggedUser')
+    if (loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON)
+      this.props.authenticateUser(user)
+    }
   }
 
   render() {
     const productById = (id) => this.props.products.find(item => item.id === id)
 
-    //console.log(this.props.products)
     //Do not render single product screen unless the props are fully loaded
     return (
       <div className="App">
@@ -30,7 +35,9 @@ class App extends React.Component {
             <div>
               <Link to="/">home</Link> &nbsp;
               <Link to="/products">products</Link> &nbsp;
-    {this.props.user && <Link to="/products/new">new product</Link>}
+  {this.props.user && <Link to="/products/new">new product</Link>} &nbsp;
+  {this.props.user && this.props.user.username}
+  {this.props.user && <button onClick={this.props.logout}>log out</button>}
               {this.props.user === null && <Link to="/login">login</Link>}
             </div>
               <Notification message={this.props.notification} />
@@ -64,7 +71,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-  initializeProducts, deleteProduct, createNotification, login
+  initializeProducts, deleteProduct, createNotification, login, authenticateUser, logout
 }
 
 export default connect (

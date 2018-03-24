@@ -6,6 +6,7 @@ const userSchema = new mongoose.Schema({
   passwordHash: String,
   favoriteProducts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Product' }],
   favoriteShops: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Shop' }],
+  addedProducts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Product' }]
 })
 
 userSchema.statics.format = (user) => {
@@ -14,7 +15,8 @@ userSchema.statics.format = (user) => {
     username: user.username,
     name: user.name,
     favoriteProducts: user.favoriteProducts,
-    favoriteShops: user.favoriteShops
+    favoriteShops: user.favoriteShops,
+    addedProducts: user.addedProducts
   }
 }
 

@@ -7,7 +7,6 @@ const LoginForm = ({ login }) => {
       username: event.target.username.value,
       password: event.target.password.value
     }
-    //If price contains a comma, replace it with a dot:
     login(credentials)
   }
 

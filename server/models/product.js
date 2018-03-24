@@ -7,7 +7,8 @@ const productSchema = new mongoose.Schema ({
   weigth: Number,
   unitprice: Number,
   unit: String,
-  shops: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Shop' }]
+  shops: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Shop' }],
+  user: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
 })
 
 productSchema.statics.format = (product) => {
@@ -19,7 +20,8 @@ productSchema.statics.format = (product) => {
     weigth: product.weigth,
     unitprice: product.unitprice,
     unit: product.unit,
-    shops: product.shops
+    shops: product.shops,
+    user: product.user
   }
 }
 
