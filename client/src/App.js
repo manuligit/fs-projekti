@@ -15,11 +15,12 @@ class App extends React.Component {
   componentWillMount() {
     console.log('mounted')
     this.props.initializeProducts()
-    console.log(this.props.products)
+    //console.log(this.props.products)
 
     const loggedUserJSON = window.localStorage.getItem('loggedUser')
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
+      console.log('app.js componentwillmount user: ', user)
       this.props.authenticateUser(user)
     }
   }

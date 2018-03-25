@@ -14,6 +14,7 @@ const Home = ({ user }) => {
         <h2>Welcome {user.name}!</h2>
         {user.addedProducts &&
           <div>You have added {user.addedProducts.length} products</div>}
+        {user.addedProducts && console.log(user.addedProducts)}
         {user.addedProducts &&
         user.addedProducts.map(product =>
           <li key={product._id}>
