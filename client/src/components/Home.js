@@ -9,6 +9,7 @@ const Home = ({ user }) => {
       </div>
     )
   } else {
+    console.log('home propsuser', user)
     return (
       <div>
         <h2>Welcome {user.name}!</h2>

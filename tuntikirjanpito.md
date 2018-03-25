@@ -15,5 +15,6 @@
 | 24.3. | 1 | Backendin päivitys (käyttäjän ja tuotteen linkittäminen yhteen) | 
 | | 0,5 | Linkitys toimii myös frontendissä, etusivulle lisätty käyttäjäkohtainen listaus |
 | | 1,5 | Reducereiden + staten päivitystä (käyttäjän lisäämät tuotteet myös käyttäjälle stateen) |
+| 25.3. | 1 | Reducereiden + autentikoinnin tutkimista |
 ||||
 | yht   | 22,5   | | 

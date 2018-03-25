@@ -21,6 +21,9 @@ class App extends React.Component {
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
       console.log('app.js componentwillmount user: ', user)
+      const propsuser = this.props.user
+      console.log('this.props user: ', propsuser)
+
       this.props.authenticateUser(user)
     }
   }
