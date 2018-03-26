@@ -16,5 +16,7 @@
 | | 0,5 | Linkitys toimii myös frontendissä, etusivulle lisätty käyttäjäkohtainen listaus |
 | | 1,5 | Reducereiden + staten päivitystä (käyttäjän lisäämät tuotteet myös käyttäjälle stateen) |
 | 25.3. | 1 | Reducereiden + autentikoinnin tutkimista |
+| 26.3. | 1,5 | Käyttäjän listatoimintojen korjaaminen + reducereiden päivitys |
+||||
 ||||
 | yht   | 22,5   | | 

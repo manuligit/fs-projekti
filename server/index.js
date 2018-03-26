@@ -10,7 +10,6 @@ const usersRouter = require('./controllers/users')
 const middleware = require('./utils/middleware')
 const path = require('path')
 const morgan = require('morgan')
-require('dotenv').config()
 
 if ( process.env.NODE_ENV !== 'production' ) {
   require('dotenv').config()
