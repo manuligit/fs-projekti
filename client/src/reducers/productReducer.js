@@ -6,11 +6,11 @@ const productReducer = (state = [], action) => {
       return action.data
     case 'NEW_PRODUCT':
       return [...state, action.data]
-    case 'UPDATE_LIST': {
+    case 'UPDATE_PRODUCT_LIST': {
       const old = state.filter(a => a.id !== action.data.id)
       return [...old, action.data]
     }
-    case 'DELETE_ITEM':
+    case 'DELETE_PRODUCT':
       return state.filter(a => a.id !== action.data)
     default:
       return state
@@ -37,15 +37,9 @@ export const createProduct = (name, category, price) => {
       data: newProduct
     })
 
-    //set the new product also to the jsonwebtoken:
-    let user = JSON.parse(window.localStorage.getItem('loggedUser'))
-    const addedProducts = user.addedProducts.concat(newProduct)
-    user.addedProducts = addedProducts
-    console.log('setting new user: ', user)
-    window.localStorage.setItem('loggedUser', JSON.stringify(user))
     //also add product to the user in state:
     dispatch({
-      type: 'ADDPRODUCT',
+      type: 'ADD_PRODUCT_TO_USER',
       data: newProduct
     })
   }
@@ -57,7 +51,12 @@ export const updateProduct = (id, name, category, price) => {
     const updatedProduct = await productService.update(id, content)
     //console.log('productreducer updateProduct', updatedProduct)
     dispatch({
-      type: 'UPDATE_LIST',
+      type: 'UPDATE_PRODUCT_LIST',
+      data: updatedProduct
+    })
+
+    dispatch({
+      type: 'UPDATE_USER_PRODUCT_LIST',
       data: updatedProduct
     })
   }
@@ -67,7 +66,12 @@ export const deleteProduct = (id) => {
   return async (dispatch) => {
     await productService.remove(id)
     dispatch({
-      type: 'DELETE_ITEM',
+      type: 'DELETE_PRODUCT',
+      data: id
+    })
+
+    dispatch({
+      type: 'DELETE_PRODUCT_FROM_USER',
       data: id
     })
   }
