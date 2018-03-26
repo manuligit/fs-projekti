@@ -23,7 +23,8 @@ const userReducer = (state = null, action) => {
       console.log('*************************')
       console.log(state.addedProducts)
       let copyProducts = state.addedProducts.slice()
-      let products = copyProducts.map(a => a.id !== action.data.id ? a : action.data)
+      console.log(copyProducts[0].id)
+      let products = copyProducts.map(a => a._id === action.data.id ? action.data : a)
       //products = products.concat(action.data)
       console.log('products after', products)
       console.log('*************************')
@@ -34,7 +35,7 @@ const userReducer = (state = null, action) => {
     case 'DELETE_PRODUCT_FROM_USER': {
       console.log(state.addedProducts.length)
       console.log(action.data)
-      const products = state.addedProducts.filter(a => a.id !== action.data)
+      const products = state.addedProducts.filter(a => a._id !== action.data)
       console.log(products.length)
       //update JSONWebToken
       window.localStorage.setItem('loggedUser', JSON.stringify({ ...state, addedProducts: products }))
