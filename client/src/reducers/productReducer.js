@@ -37,6 +37,12 @@ export const createProduct = (name, category, price) => {
       data: newProduct
     })
 
+    //set the new product also to the jsonwebtoken:
+    let user = JSON.parse(window.localStorage.getItem('loggedUser'))
+    const addedProducts = user.addedProducts.concat(newProduct)
+    user.addedProducts = addedProducts
+    console.log('setting new user: ', user)
+    window.localStorage.setItem('loggedUser', JSON.stringify(user))
     //also add product to the user in state:
     dispatch({
       type: 'ADDPRODUCT',
