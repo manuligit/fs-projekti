@@ -8,7 +8,7 @@ loginRouter.post('/', async (request, response) => {
     const body = request.body
     console.log('loginRouter request.body: ', body)
     const user = await User.findOne({ username: body.username })
-      .populate('addedProducts',  { id: 1, name: 1 })
+      .populate('addedProducts', { id: 1, name: 1 })
     const passwordCorrect = user === null ?
       false :
       await bcrypt.compare(body.password, user.passwordHash)

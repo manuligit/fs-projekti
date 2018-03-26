@@ -14,29 +14,29 @@ const userReducer = (state = null, action) => {
     case 'ADD_PRODUCT_TO_USER': {
       //create the new product list for state
       let products = state.addedProducts.slice()
-      products = products.concat(action.data)
+      let item = { ...action.data }
+      //rename id field to _id:
+      item._id = item.id
+      delete item.id
+      products = products.concat(item)
       //update JSONWebToken
       window.localStorage.setItem('loggedUser', JSON.stringify({ ...state, addedProducts: products }))
       return { ...state, addedProducts: products }
     }
     case 'UPDATE_USER_PRODUCT_LIST': {
-      console.log('*************************')
-      console.log(state.addedProducts)
       let copyProducts = state.addedProducts.slice()
-      console.log(copyProducts[0].id)
-      let products = copyProducts.map(a => a._id === action.data.id ? action.data : a)
-      //products = products.concat(action.data)
-      console.log('products after', products)
-      console.log('*************************')
+      let item = { ...action.data }
+      //rename id field to _id:
+      item._id = item.id
+      delete item.id
+      //add to user's list in state
+      let products = copyProducts.map(a => a._id === item._id ? item : a)
       //update JSONWebToken
       window.localStorage.setItem('loggedUser', JSON.stringify({ ...state, addedProducts: products }))
       return { ...state, addedProducts: products }
     }
     case 'DELETE_PRODUCT_FROM_USER': {
-      console.log(state.addedProducts.length)
-      console.log(action.data)
       const products = state.addedProducts.filter(a => a._id !== action.data)
-      console.log(products.length)
       //update JSONWebToken
       window.localStorage.setItem('loggedUser', JSON.stringify({ ...state, addedProducts: products }))
       return { ...state, addedProducts: products }
