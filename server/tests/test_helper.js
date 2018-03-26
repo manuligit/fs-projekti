@@ -1,4 +1,5 @@
 const Product = require('../models/product')
+const User = require('../models/user')
 
 const initialProducts = [
   {
@@ -25,11 +26,30 @@ const initialProducts = [
   }
 ]
 
+const newUser = new User({
+  'name': 'Jani Jaskelin',
+  'username': 'jake',
+  'password': 'salasana'
+})
+
+
+const newUserCredentials = {
+  'name': 'Jani Jaskelin',
+  'username': 'jake',
+  'password': 'salasana'
+}
+
+
 const productsInDb = async () => {
   const products = await Product.find({})
   return products.map(Product.format)
 }
 
+const usersInDb = async () => {
+  const users = await User.find({})
+  return users.map(User.format)
+}
+
 module.exports = {
-  initialProducts, productsInDb
+  initialProducts, productsInDb, usersInDb, newUser, newUserCredentials
 }
