@@ -4,6 +4,9 @@ module.exports = {
         "node": true
     },
     "parser": "babel-eslint",
+    "parserOptions": {
+        "ecmaVersion": 2017
+    },
     "extends": "eslint:recommended",
     "rules": {
         "indent": [

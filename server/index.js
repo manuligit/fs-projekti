@@ -10,13 +10,11 @@ const usersRouter = require('./controllers/users')
 const middleware = require('./utils/middleware')
 const path = require('path')
 const morgan = require('morgan')
-
-if ( process.env.NODE_ENV !== 'production' ) {
-  require('dotenv').config()
-}
+const config = require('./utils/config')
+const http = require('http')
 
 mongoose
-  .connect(process.env.MONGODB_URI)
+  .connect(config.mongoUrl)
   .then( () => {
     console.log('connected to database')
   })
@@ -44,7 +42,16 @@ app.get('*', function (req, res) {
   res.sendFile(path.join(__dirname, 'index.html'))
 })
 
-const PORT = process.env.PORT || 3001
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`)
+const server = http.createServer(app)
+
+server.listen(config.port, () => {
+  console.log(`Server running on port ${config.port}`)
 })
+
+server.on('close', () => {
+  mongoose.connection.close()
+})
+
+module.exports = {
+  app, server
+}

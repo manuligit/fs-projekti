@@ -22,7 +22,11 @@ productsRouter.get('/:id', async (request, response) => {
       .populate('shops', { id: 1, name: 1, chain: 1 })
       .populate('user', { id: 1, username: 1, name: 1 })
 
-    response.json(Product.format(product))
+    if (product) {
+      response.json(Product.format(product))
+    } else {
+      response.status(404).end()
+    }
   } catch (exception) {
     console.log('productsRouter error:', exception.name)
     response.status(400).send({ error: 'Malformatted id' })
