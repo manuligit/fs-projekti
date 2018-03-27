@@ -26,19 +26,24 @@ const initialProducts = [
   }
 ]
 
+let password = 'salasana'
+
 const newUser = new User({
   'name': 'Jani Jaskelin',
   'username': 'jake',
-  'password': 'salasana'
+  'password': password,
+  'passwordHash': mockPasswordHash(password)
 })
 
+function mockPasswordHash (password) {
+  return password.concat('mockedhash')
+}
 
 const newUserCredentials = {
   'name': 'Jani Jaskelin',
   'username': 'jake',
   'password': 'salasana'
 }
-
 
 const productsInDb = async () => {
   const products = await Product.find({})
@@ -51,5 +56,5 @@ const usersInDb = async () => {
 }
 
 module.exports = {
-  initialProducts, productsInDb, usersInDb, newUser, newUserCredentials
+  initialProducts, productsInDb, usersInDb, newUser, newUserCredentials, mockPasswordHash
 }

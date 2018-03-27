@@ -16,8 +16,7 @@ userSchema.statics.format = (user) => {
     name: user.name,
     favoriteProducts: user.favoriteProducts,
     favoriteShops: user.favoriteShops,
-    addedProducts: user.addedProducts,
-    passwordHash: user.passwordHash
+    addedProducts: user.addedProducts
   }
 }
 

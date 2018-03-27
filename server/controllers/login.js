@@ -17,7 +17,7 @@ loginRouter.post('/', async (request, response) => {
 
     //skip bcrypt compare when testing:
     if (process.env.NODE_ENV === 'test') {
-      console.log(user.passwordHash)
+      //console.log(user)
       let hash = body.password.concat(config.passwordHash)
       console.log(hash)
       passwordCorrect = user === null ?
