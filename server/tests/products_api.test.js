@@ -12,7 +12,7 @@ describe('test with initialized products', async () => {
     const productObjects = initialProducts.map(n => new Product(n))
     await Promise.all(productObjects.map(n => n.save()))
   })
-  describe('api-get tests', async () => {
+  describe.skip('api-get tests', async () => {
     test('products are returned as json', async () => {
       await api
         .get('/api/products')
@@ -59,9 +59,8 @@ describe('api-post tests', async () => {
     await newUser.save()
   })
 
-
   test('logged user can post products to server with a valid token', async () => {
-    const bProducts = await productsInDb()
+    const beforeProducts = await productsInDb()
 
     //login with the created user credentials to receive token:
     const loginRequest = await api
@@ -92,11 +91,9 @@ describe('api-post tests', async () => {
       .expect(200)
       .expect('Content-Type', /application\/json/)
 
-    const aProducts = await productsInDb()
-    expect(aProducts.length).toBe(bProducts.length+1)
-    //console.log(request.body)
+    const afterProducts = await productsInDb()
+    expect(beforeProducts.length+1).toBe(afterProducts.length)
   })
-
 
   test('products cannot be posted to server without a token', async () => {
     const beforeProducts = await productsInDb()
@@ -117,6 +114,66 @@ describe('api-post tests', async () => {
     const afterProducts = await productsInDb()
 
     expect(beforeProducts.length).toBe(afterProducts.length)
+  })
+
+  test('products cannot be posted to server with an invalid token', async () => {
+    const beforeProducts = await productsInDb()
+
+    const newProduct =
+      {
+        'name': 'Herkkutatti',
+        'category': 'Sienet',
+        'price': 3.99
+      }
+
+    let headers = { 'Authorization': 'bearer thisisnotavalidtoken' }
+    await api
+      .post('/api/products')
+      .set(headers)
+      .send(newProduct)
+      .expect(401)
+      .expect('Content-Type', /application\/json/)
+
+    const afterProducts = await productsInDb()
+
+    expect(beforeProducts.length).toBe(afterProducts.length)
+  })
+})
+
+describe('api-put tests', async () => {
+  beforeAll(async () => {
+    await User.remove({})
+    //create test user for updating products
+    await newUser.save()
+    //create a product to edit:
+
+  })
+  test('items can be updated with a valid id and token', async () => {
+    expect(true).toBe(true)
+  })
+  test.skip('items cannot be updated with a invalid id and token', async () => {
+    expect(true).toBe(true)
+  })
+  test.skip('items cannot be updated with a valid id and invalid token', async () => {
+    expect(true).toBe(true)
+  })
+})
+
+describe.skip('api-delete tests', async () => {
+  beforeAll(async () => {
+    await User.remove({})
+    //create test user for deleting products
+    await newUser.save()
+    //create a products to delete
+  })
+  test('items can be deleted with a valid id and token', async () => {
+    expect(true).toBe(true)
+  })
+  test.skip('items cannot be deleted with a invalid id and token', async () => {
+    expect(true).toBe(true)
+  })
+  test.skip('items cannot be deleted with a valid id and invalid token', async () => {
+    expect(true).toBe(true)
   })
 })
 

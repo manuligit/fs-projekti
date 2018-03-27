@@ -46,7 +46,7 @@ const bcryptUser = async () => {
     'passwordHash': passwordHash
   })
   let user = await bUser.save()
-  console.log(user)
+  console.log(user.username)
 }
 
 const bcryptUserCredentials = {

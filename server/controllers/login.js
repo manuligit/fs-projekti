@@ -11,7 +11,7 @@ loginRouter.post('/', async (request, response) => {
     const user = await User.findOne({ username: body.username })
       .populate('addedProducts', { id: 1, name: 1 })
 
-    console.log('loginrouter user: ', user)
+    //console.log('loginrouter user: ', user)
 
     let passwordCorrect
 

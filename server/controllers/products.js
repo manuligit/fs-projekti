@@ -36,16 +36,11 @@ productsRouter.get('/:id', async (request, response) => {
 productsRouter.post('/', async (request, response) => {
   const body = request.body
   try {
-    //console.log('asdf')
     if (body.name === undefined || body.price === undefined) {
       return response.status(400).json({ error: 'name or price missing' })
     }
-    console.log(request.token)
-    //console.log(request)
-    const decodedToken = jwt.verify(request.token, process.env.SECRET)
-    console.log(decodedToken)
 
-    console.log(request.token)
+    const decodedToken = jwt.verify(request.token, process.env.SECRET)
 
     if (!request.token || !decodedToken.id) {
       return response.status(401).json({ error: 'token missing or invalid' })
