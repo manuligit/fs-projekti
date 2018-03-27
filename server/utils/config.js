@@ -10,7 +10,10 @@ if (process.env.NODE_ENV === 'test') {
   mongoUrl = process.env.TEST_MONGODB_URI
 }
 
+let passwordHash = process.env.HASH
+
 module.exports = {
   mongoUrl,
-  port
+  port,
+  passwordHash
 }

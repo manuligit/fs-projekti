@@ -5,7 +5,7 @@ const Product = require('../models/product')
 const User = require('../models/user')
 const { initialProducts, productsInDb, usersInDb, newUser, newUserCredentials } = require('./test_helper')
 
-describe('test with initialized products', async () => {
+describe.skip('test with initialized products', async () => {
   beforeAll(async () => {
     await Product.remove({})
 
@@ -52,7 +52,7 @@ describe('test with initialized products', async () => {
   })
 })
 
-describe('api-post tests', async () => {
+describe.skip('api-post tests', async () => {
   beforeAll(async () => {
     await User.remove({})
     //create test user for posting

@@ -1,6 +1,7 @@
 const usersRouter = require('express').Router()
 const User = require('../models/user')
 const bcrypt = require('bcrypt')
+const config = require('../utils/config')
 
 usersRouter.get('/', async (request, response) => {
   try {
@@ -26,15 +27,22 @@ usersRouter.post('/', async (request, response) => {
     }
 
     const saltRounds = 10
-    const passwordHash = await bcrypt.hash(body.password, saltRounds)
+    let passwordHash
+    //do tests without bcrypt:
+    if (process.env.NODE_ENV === 'test') {
+      passwordHash = body.password.concat(config.testHash)
+    } else {
+      passwordHash = await bcrypt.hash(body.password, saltRounds)
+    }
 
     const user = new User({
       name: body.name,
       username: body.username,
       passwordHash
     })
-
+    console.log(user)
     const savedUser = await user.save()
+    console.log(savedUser)
     response.json(User.format(savedUser))
 
   } catch (exception) {
