@@ -2,7 +2,7 @@ const supertest = require('supertest')
 const { app, server } = require('../index')
 const api = supertest(app)
 const User = require('../models/user')
-const { usersInDb, newUser, newUserCredentials, bcryptUser, bcryptUserCredentials } = require('./test_helper')
+const { newUser, newUserCredentials, bcryptUser, bcryptUserCredentials } = require('./test_helper')
 
 //For the login tests, bcrypt is disabled in test enviroment
 describe('test with initialized products', async () => {
@@ -32,9 +32,9 @@ describe('test with initialized products', async () => {
     test('logged user can post products to server with a valid token and bcrypt', async () => {
       await User.remove({})
       //create test user for posting
-      bcryptUser()
-      const dbUsers = await usersInDb()
-      console.log(dbUsers)
+      await bcryptUser()
+      //const dbUsers = await usersInDb()
+      //console.log(dbUsers)
       const user = await User.findOne({ username: bcryptUserCredentials.username })
       console.log(user.username)
 

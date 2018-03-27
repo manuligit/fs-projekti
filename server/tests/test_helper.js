@@ -76,6 +76,6 @@ const usersInDb = async () => {
 }
 
 module.exports = {
-  initialProducts, productsInDb, usersInDb, newUser, newUserCredentials, 
+  initialProducts, productsInDb, usersInDb, newUser, newUserCredentials,
   mockPasswordHash, bcryptUser, bcryptUserCredentials
 }
