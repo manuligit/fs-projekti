@@ -25,12 +25,11 @@ usersRouter.post('/', async (request, response) => {
     if (body.password.length < 8) {
       return response.status(400).json({ error: 'Password must be at least 8 characters long' })
     }
-    
+
     const saltRounds = 10
     let passwordHash
     //do tests without bcrypt:
     if (process.env.NODE_ENV === 'test') {
-      console.log('hello tests')
       passwordHash = body.password.concat(config.testHash)
     } else {
       passwordHash = await bcrypt.hash(body.password, saltRounds)

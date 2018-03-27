@@ -7,7 +7,7 @@ const config = require('../utils/config')
 loginRouter.post('/', async (request, response) => {
   try {
     const body = request.body
-    console.log('loginRouter request.body: ', body)
+    //console.log('loginRouter request.body: ', body)
     const user = await User.findOne({ username: body.username })
       .populate('addedProducts', { id: 1, name: 1 })
 
@@ -17,11 +17,19 @@ loginRouter.post('/', async (request, response) => {
 
     //skip bcrypt compare when testing:
     if (process.env.NODE_ENV === 'test') {
-      //console.log(user)
-      let hash = body.password.concat(config.passwordHash)
-      console.log(hash)
-      passwordCorrect = user === null ?
-        false : user.passwordHash === hash
+      if (body.bcrypt) {
+        console.log('hello bcrypt')
+        //console.log(user)
+        passwordCorrect = user === null ?
+          false :
+          await bcrypt.compare(body.password, user.passwordHash)
+      } else {
+        //console.log(user)
+        let hash = body.password.concat(config.passwordHash)
+        //console.log(hash)
+        passwordCorrect = user === null ?
+          false : user.passwordHash === hash
+      }
     } else {
       passwordCorrect = user === null ?
         false :
