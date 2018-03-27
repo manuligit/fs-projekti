@@ -94,7 +94,7 @@ describe('api-post tests', async () => {
   test('products cannot be posted to server without a token', async () => {
     const beforeProducts = await productsInDb()
 
-    const newProduct = 
+    const newProduct =
       {
         'name': 'Herkkutatti',
         'category': 'Sienet',
