@@ -18,18 +18,16 @@ productsRouter.get('/', async (request, response) => {
 
 productsRouter.get('/:id', async (request, response) => {
   try {
-    const product = await Product.findById(request.params.id)
+    await Product.findById(request.params.id)
       .populate('shops', { id: 1, name: 1, chain: 1 })
       .populate('user', { id: 1, username: 1, name: 1 })
-
-    if (product) {
-      response.json(Product.format(product))
-    } else {
-      response.status(404).end()
-    }
+      .exec (function (err, product) {
+        if (err) return response.status(404).send({ error: 'Id not found' })
+        return response.json(Product.format(product))
+      })
   } catch (exception) {
     console.log('productsRouter error:', exception.name)
-    response.status(400).send({ error: 'Malformatted id' })
+    response.status(500).send({ error: 'Malformatted id' })
   }
 })
 
@@ -121,6 +119,7 @@ productsRouter.delete('/:id', async (request, response) => {
     await Product.findByIdAndRemove(request.params.id,
       (err) => {
         if (err) {
+          console.log(err.name)
           response.status(404).send({ error: 'Id not found' })
         } else {
           response.status(204).end()

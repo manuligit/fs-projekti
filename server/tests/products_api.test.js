@@ -11,7 +11,6 @@ describe.skip('testing the products api', async () => {
   let headers = ''
 
   beforeAll(async () => {
-    console.log('productstest beforeall **********')
     await User.remove({})
     //Create a test user for posting/editing/updating products:
     await newUser.save()
@@ -71,7 +70,7 @@ describe.skip('testing the products api', async () => {
 
       await api
         .get(`/api/products/${invalidId}`)
-        .expect(400)
+        .expect(404)
     })
   })
 
@@ -258,6 +257,5 @@ describe.skip('testing the products api', async () => {
 
   afterAll(() => {
     server.close()
-    console.log('productstest afterall **********')
   })
 })

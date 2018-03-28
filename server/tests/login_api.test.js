@@ -10,7 +10,7 @@ describe.skip('test with initialized products', async () => {
   describe('User can log using valid credentials', async () => {
     let bcryptUser = {}
     beforeAll(async () => {
-      console.log('loginstest beforeall **********')
+      //console.log('loginstest beforeall **********')
       //Remove existing users from db
       await User.remove({})
       let passwordHash = await bcrypt.hash('bcryptsalattu', 1)
@@ -22,7 +22,7 @@ describe.skip('test with initialized products', async () => {
         'passwordHash': passwordHash
       })
       bcryptUser = await bUser.save()
-      console.log('loginstest beforeall **********')
+      //console.log('loginstest beforeall **********')
     })
 
     test('logged user can login to server', async () => {
@@ -76,7 +76,6 @@ describe.skip('test with initialized products', async () => {
 
   afterAll(() => {
     server.close()
-    console.log('loginstest afterall **********')
   })
 
 })

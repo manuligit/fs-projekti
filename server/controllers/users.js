@@ -14,6 +14,20 @@ usersRouter.get('/', async (request, response) => {
   }
 })
 
+usersRouter.get('/:id', async (request, response) => {
+  try {
+    await User.findById(request.params.id)
+      .populate('addedProducts', { id: 1, name: 1 }).
+      exec (function (err, user) {
+        if (err) return response.status(404).send({ error: 'Id not found' })
+        return response.json(User.format(user))
+      })
+  } catch (exception) {
+    console.log(exception.name)
+    response.status(500).send({ error: 'Server error' })
+  }
+})
+
 usersRouter.post('/', async (request, response) => {
   try {
     const body = request.body
