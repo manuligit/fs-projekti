@@ -2,17 +2,28 @@ const supertest = require('supertest')
 const { app, server } = require('../index')
 const api = supertest(app)
 const User = require('../models/user')
-const { newUser, newUserCredentials, bcryptUser, bcryptUserCredentials } = require('./test_helper')
+const { newUser, newUserCredentials, bcryptUserCredentials } = require('./test_helper')
+const bcrypt = require('bcrypt')
 
 //For the login tests, bcrypt is disabled in test enviroment
 describe('test with initialized products', async () => {
   describe('User can log using valid credentials', async () => {
+    let bcryptUser = {}
     beforeAll(async () => {
       //Remove existing users from db
       await User.remove({})
+      let passwordHash = await bcrypt.hash('bcryptsalattu', 1)
+      //Create user with bcrypt-hashed password:
+      const bUser = new User({
+        'name': 'Joni Joukahainen',
+        'username': 'joni',
+        'password': 'bcryptsalattu',
+        'passwordHash': passwordHash
+      })
+      bcryptUser = await bUser.save()
     })
 
-    test('logged user can post products to server with a valid token', async () => {
+    test('logged user can login to server', async () => {
       //create test user for posting
       await newUser.save()
       //const user = await User.findOne({ username: newUserCredentials.username })
@@ -26,15 +37,11 @@ describe('test with initialized products', async () => {
         })
         .expect(200)
       expect(loginRequest.body.token)
+      expect(loginRequest.body.username).toEqual(newUserCredentials.username)
       //console.log(loginRequest.body)
     })
 
-    test('logged user can post products to server with a valid token and bcrypt', async () => {
-      await User.remove({})
-      //create test user for posting
-      await bcryptUser()
-      //const dbUsers = await usersInDb()
-      //console.log(dbUsers)
+    test('logged user login to server with a valid token and bcrypt', async () => {
       const user = await User.findOne({ username: bcryptUserCredentials.username })
       console.log(user.username)
 
@@ -50,7 +57,7 @@ describe('test with initialized products', async () => {
         .expect(200)
 
       expect(loginRequest.body.token)
-      //console.log(loginRequest.body)
+      expect(loginRequest.body.username).toEqual(bcryptUser.username)
     })
 
     test('User cannot log in using invalid credentials', async () => {
@@ -64,8 +71,9 @@ describe('test with initialized products', async () => {
         .expect(401)
     })
   })
-})
 
-afterAll(() => {
-  server.close()
+  afterAll(() => {
+    server.close()
+  })
+
 })

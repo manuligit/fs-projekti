@@ -1,6 +1,5 @@
 const Product = require('../models/product')
 const User = require('../models/user')
-const bcrypt = require('bcrypt')
 
 const initialProducts = [
   {
@@ -36,19 +35,6 @@ const newUser = new User({
   'passwordHash': mockPasswordHash(password)
 })
 
-const bcryptUser = async () => {
-  let passwordHash = await bcrypt.hash('bcryptsalattu', 1)
-  //console.log(passwordHash)
-  const bUser = new User({
-    'name': 'Joni Joukahainen',
-    'username': 'joni',
-    'password': 'bcryptsalattu',
-    'passwordHash': passwordHash
-  })
-  let user = await bUser.save()
-  console.log(user.username)
-}
-
 const bcryptUserCredentials = {
   'name': 'Joni Joukahainen',
   'username': 'joni',
@@ -77,5 +63,5 @@ const usersInDb = async () => {
 
 module.exports = {
   initialProducts, productsInDb, usersInDb, newUser, newUserCredentials,
-  mockPasswordHash, bcryptUser, bcryptUserCredentials
+  mockPasswordHash, bcryptUserCredentials
 }
