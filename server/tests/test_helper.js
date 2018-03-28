@@ -61,7 +61,12 @@ const usersInDb = async () => {
   return users.map(User.format)
 }
 
+const newProduct = {
+  'name': 'Herkkutatti',
+  'category': 'Sienet',
+  'price': 3.99
+}
 module.exports = {
   initialProducts, productsInDb, usersInDb, newUser, newUserCredentials,
-  mockPasswordHash, bcryptUserCredentials
+  mockPasswordHash, bcryptUserCredentials, newProduct
 }

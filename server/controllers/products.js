@@ -74,28 +74,56 @@ productsRouter.post('/', async (request, response) => {
 productsRouter.put('/:id', async (request, response) => {
   try {
     const body = request.body
+
+    if (body.name === undefined || body.price === undefined) {
+      return response.status(400).json({ error: 'name or price missing' })
+    }
+
+    //Only allow logged users edit products:
+    const decodedToken = jwt.verify(request.token, process.env.SECRET)
+
+    if (!request.token || !decodedToken.id) {
+      return response.status(401).json({ error: 'token missing or invalid' })
+    }
+
     //console.log(body)
     Product.findByIdAndUpdate(request.params.id,
       { name: body.name, category: body.category, price: body.price, shops: body.shops },
       { new: true },
       (err, todo) => {
-        if (err) { response.status(500).send(err) }
+        if (err) { console.log(err.name) }
         return response.json(Product.format(todo))
       }
     )
   } catch (exception) {
-    console.log(exception)
-    response.status(500).json({ error: 'Something broke' })
+    if (exception.name === 'CastError') {
+      response.status(404).send({ error: 'Id not found' })
+    } else if (exception.name === 'JsonWebTokenError' ) {
+      response.status(401).json({ error: 'You need to be logged in to update products' })
+    } else {
+      console.log(exception)
+      response.status(500).json({ error: 'Something broke' })
+    }
   }
 })
 
 productsRouter.delete('/:id', async (request, response) => {
   try {
+    const decodedToken = jwt.verify(request.token, process.env.SECRET)
+
+    if (!request.token || !decodedToken.id) {
+      return response.status(401).json({ error: 'token missing or invalid' })
+    }
+
     await Product.findByIdAndRemove(request.params.id)
     response.status(204).end()
   } catch (exception) {
-    console.log('productsrouter.delete exception:', exception.name)
-    response.status(400).json({ error: 'invalid id' })
+    if (exception.name === 'JsonWebTokenError' ) {
+      response.status(401).json({ error: 'You need to be logged in to delete products' })
+    } else {
+      console.log('productsrouter.delete exception:', exception.name)
+      response.status(400).json({ error: 'invalid id' })
+    }
   }
 })
 

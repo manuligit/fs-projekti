@@ -1,5 +1,6 @@
-PUT http://localhost:3001/api/products/5aaec80ac50ef74542f7f6ee
+PUT http://localhost:3001/api/products/5aaec80ac50ef74542f7ff
 content-type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Impha2UiLCJpZCI6IjVhYjJhNWViMjNjYmMxYzBmMGRmOTBmYSIsImlhdCI6MTUyMTY1ODg1NX0.I4zs7GChj6Vbui6M3fyVjJCzoQvKAP6L9E-AeK5EET0
 
 {
     "name": "Juhlamokka",
