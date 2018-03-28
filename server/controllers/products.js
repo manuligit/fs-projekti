@@ -118,14 +118,23 @@ productsRouter.delete('/:id', async (request, response) => {
       return response.status(401).json({ error: 'token missing or invalid' })
     }
 
-    await Product.findByIdAndRemove(request.params.id)
-    response.status(204).end()
+    await Product.findByIdAndRemove(request.params.id,
+      (err) => {
+        if (err) {
+          response.status(404).send({ error: 'Id not found' })
+        } else {
+          response.status(204).end()
+        }
+      }
+    )
   } catch (exception) {
-    if (exception.name === 'JsonWebTokenError' ) {
+    if (exception.name === 'CastError') {
+      console.log('CastError')
+    } else if (exception.name === 'JsonWebTokenError' ) {
       response.status(401).json({ error: 'You need to be logged in to delete products' })
     } else {
       console.log('productsrouter.delete exception:', exception.name)
-      response.status(400).json({ error: 'invalid id' })
+      response.status(500).json({ error: 'Server error' })
     }
   }
 })

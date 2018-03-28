@@ -3,7 +3,8 @@ const { app, server } = require('../index')
 const api = supertest(app)
 const Product = require('../models/product')
 const User = require('../models/user')
-const { initialProducts, productsInDb,  newUser, newUserCredentials, newProduct } = require('./test_helper')
+const { initialProducts, productsInDb,  newUser, newUserCredentials, newProduct,
+  invalidHeaders } = require('./test_helper')
 
 describe('testing the products api', async () => {
   let token = ''
@@ -33,7 +34,7 @@ describe('testing the products api', async () => {
     await Promise.all(productObjects.map(n => n.save()))
   })
 
-  describe.skip('api-get tests', async () => {
+  describe('api-get tests', async () => {
     test('products are returned as json', async () => {
       await api
         .get('/api/products')
@@ -72,7 +73,7 @@ describe('testing the products api', async () => {
     })
   })
 
-  describe.skip('api-post tests', async () => {
+  describe('api-post tests', async () => {
     //Initialize some variables
     //let token = ''
     //let headers = ''
@@ -111,7 +112,6 @@ describe('testing the products api', async () => {
 
     test('products cannot be posted to server with an invalid token', async () => {
       const beforeProducts = await productsInDb()
-      let invalidHeaders = { 'Authorization': 'bearer thisisnotavalidtoken' }
       await api
         .post('/api/products')
         .set(invalidHeaders)
@@ -151,11 +151,9 @@ describe('testing the products api', async () => {
         .expect(200)
         .expect('Content-Type', /application\/json/)
 
-      //console.log(response.body)
       expect(newName.name).toEqual(response.body.name)
       const dbItemsAfter = await productsInDb()
       expect(dbItemsBefore.length).toBe(dbItemsAfter.length)
-
     })
 
     test('items cannot be updated with a invalid id and token', async () => {
@@ -172,37 +170,87 @@ describe('testing the products api', async () => {
         .expect(404)
         .expect('Content-Type', /application\/json/)
     })
-    
+
     test('items cannot be updated with a valid id and invalid token', async () => {
       let newName = { name: 'Saippua', category: 'pesuaineet' }
       //Replace fields:
       Object.assign(item, newName)
-      let invalidHeaders = { 'Authorization': 'bearer thisisnotavalidtoken' }
 
-      const response = await api
+      await api
         .put(`/api/products/${item.id}`)
         .set(invalidHeaders)
         .send(item)
         .expect(401)
         .expect('Content-Type', /application\/json/)
     })
+
+    test('items cannot be updated without a token', async () => {
+      await api
+        .put(`/api/products/${item.id}`)
+        .send(item)
+        .expect(401)
+        .expect('Content-Type', /application\/json/)
+    })
   })
 
-  describe.skip('api-delete tests', async () => {
+  describe('api-delete tests', async () => {
     beforeAll(async () => {
-      await User.remove({})
-      //create test user for deleting products
-      await newUser.save()
-      //create a products to delete
+      //Initialize product database so that there are at least 2 products:
+      await Product.remove({})
+      const productObjects = initialProducts.map(n => new Product(n))
+      await Promise.all(productObjects.map(n => n.save()))
     })
+
+    test('items cannot be deleted with a invalid id and valid token', async () => {
+      const dbItemsBefore = await productsInDb()
+
+      await api
+        .delete('/api/products/invalidId')
+        .set(headers)
+        .expect(404)
+        .expect('Content-Type', /application\/json/)
+
+      const dbItemsAfter = await productsInDb()
+      expect(dbItemsBefore.length).toBe(dbItemsAfter.length)
+    })
+
+    test('items cannot be deleted with a valid id and invalid token', async () => {
+      const dbItemsBefore = await productsInDb()
+      const item = dbItemsBefore[0]
+
+      await api
+        .delete(`/api/products/${item.id}`)
+        .set(invalidHeaders)
+        .expect(401)
+        .expect('Content-Type', /application\/json/)
+
+      const dbItemsAfter = await productsInDb()
+      expect(dbItemsBefore.length).toBe(dbItemsAfter.length)
+    })
+
+    test('items cannot be deleted without a token', async () => {
+      const dbItemsBefore = await productsInDb()
+      const item = dbItemsBefore[0]
+
+      await api
+        .delete(`/api/products/${item.id}`)
+        .expect(401)
+        .expect('Content-Type', /application\/json/)
+    })
+
     test('items can be deleted with a valid id and token', async () => {
-      expect(true).toBe(true)
-    })
-    test.skip('items cannot be deleted with a invalid id and token', async () => {
-      expect(true).toBe(true)
-    })
-    test.skip('items cannot be deleted with a valid id and invalid token', async () => {
-      expect(true).toBe(true)
+      const dbItemsBefore = await productsInDb()
+      const item = dbItemsBefore[0]
+
+      await api
+        .delete(`/api/products/${item.id}`)
+        .set(headers)
+        .expect(204)
+
+      const dbItemsAfter = await productsInDb()
+      expect(dbItemsBefore.length).toBe(dbItemsAfter.length+1)
+      expect(dbItemsBefore).toContain(item)
+      expect(dbItemsAfter).not.toContain(item)
     })
   })
 

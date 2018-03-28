@@ -66,7 +66,11 @@ const newProduct = {
   'category': 'Sienet',
   'price': 3.99
 }
+
+const invalidHeaders = { 'Authorization': 'bearer thisisnotavalidtoken' }
+
+
 module.exports = {
   initialProducts, productsInDb, usersInDb, newUser, newUserCredentials,
-  mockPasswordHash, bcryptUserCredentials, newProduct
+  mockPasswordHash, bcryptUserCredentials, newProduct, invalidHeaders
 }
