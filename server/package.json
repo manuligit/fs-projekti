@@ -25,7 +25,7 @@
     "start": "node index.js",
     "watch": "nodemon index.js",
     "lint": "eslint .",
-    "test": "NODE_ENV=test jest --verbose"
+    "test": "NODE_ENV=test jest --verbose --runInBand"
   },
   "proxy": "http://localhost:3001"
 }

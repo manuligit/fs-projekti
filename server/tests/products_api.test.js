@@ -6,11 +6,12 @@ const User = require('../models/user')
 const { initialProducts, productsInDb,  newUser, newUserCredentials, newProduct,
   invalidHeaders } = require('./test_helper')
 
-describe('testing the products api', async () => {
+describe.skip('testing the products api', async () => {
   let token = ''
   let headers = ''
 
   beforeAll(async () => {
+    console.log('productstest beforeall **********')
     await User.remove({})
     //Create a test user for posting/editing/updating products:
     await newUser.save()
@@ -32,6 +33,7 @@ describe('testing the products api', async () => {
     await Product.remove({})
     const productObjects = initialProducts.map(n => new Product(n))
     await Promise.all(productObjects.map(n => n.save()))
+    console.log('productstest beforeall **********')
   })
 
   describe('api-get tests', async () => {
@@ -256,5 +258,6 @@ describe('testing the products api', async () => {
 
   afterAll(() => {
     server.close()
+    console.log('productstest afterall **********')
   })
 })
