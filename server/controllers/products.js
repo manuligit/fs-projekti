@@ -91,13 +91,16 @@ productsRouter.put('/:id', async (request, response) => {
       { name: body.name, category: body.category, price: body.price, shops: body.shops },
       { new: true },
       (err, todo) => {
-        if (err) { console.log(err.name) }
-        return response.json(Product.format(todo))
+        if (err) { response.status(404).send({ error: 'Id not found' })
+        } else {
+          return response.json(Product.format(todo))
+        }
       }
     )
   } catch (exception) {
     if (exception.name === 'CastError') {
-      response.status(404).send({ error: 'Id not found' })
+      console.log('CastError')
+      //response.status(404).send({ error: 'Id not found' })
     } else if (exception.name === 'JsonWebTokenError' ) {
       response.status(401).json({ error: 'You need to be logged in to update products' })
     } else {

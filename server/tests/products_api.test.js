@@ -126,8 +126,10 @@ describe('testing the products api', async () => {
   })
 
   describe('api-put tests', async () => {
+    let item = {}
     beforeAll(async () => {
-      //console.log(headers)
+      const dbItemsBefore = await productsInDb()
+      item = dbItemsBefore[0]
     })
 
     test('database should contain items to be updated', async () => {
@@ -138,7 +140,6 @@ describe('testing the products api', async () => {
 
     test('items can be updated with a valid id and token', async () => {
       const dbItemsBefore = await productsInDb()
-      const item = dbItemsBefore[0]
       let newName = { name: 'Korvasieni', category: 'sienet' }
       //Replace fields:
       Object.assign(item, newName)
@@ -159,20 +160,31 @@ describe('testing the products api', async () => {
 
     test('items cannot be updated with a invalid id and token', async () => {
       const dbItemsBefore = await productsInDb()
-      const item = dbItemsBefore[0]
+      const failItem = dbItemsBefore[0]
       let newName = { id:'invalidid', name: 'Mikkeller', category: 'olut' }
       //Replace fields:
-      Object.assign(item, newName)
+      Object.assign(failItem, newName)
 
       await api
-        .put(`/api/products/${item.id}`)
+        .put(`/api/products/${failItem.id}`)
         .set(headers)
-        .send(item)
+        .send(failItem)
         .expect(404)
         .expect('Content-Type', /application\/json/)
     })
-    test.skip('items cannot be updated with a valid id and invalid token', async () => {
-      expect(true).toBe(true)
+    
+    test('items cannot be updated with a valid id and invalid token', async () => {
+      let newName = { name: 'Saippua', category: 'pesuaineet' }
+      //Replace fields:
+      Object.assign(item, newName)
+      let invalidHeaders = { 'Authorization': 'bearer thisisnotavalidtoken' }
+
+      const response = await api
+        .put(`/api/products/${item.id}`)
+        .set(invalidHeaders)
+        .send(item)
+        .expect(401)
+        .expect('Content-Type', /application\/json/)
     })
   })
 
