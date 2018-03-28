@@ -17,6 +17,7 @@
 | | 1,5 | Reducereiden + staten päivitystä (käyttäjän lisäämät tuotteet myös käyttäjälle stateen) |
 | 25.3. | 1 | Reducereiden + autentikoinnin tutkimista |
 | 26.3. | 1,5 | Käyttäjän listatoimintojen korjaaminen + reducereiden päivitys |
-||||
+| 26.3. | 2 | Backendin testauksen aloittaminen tuotetesteistä |
+| 27.3. | 3 | Backendin testauksen jatkaminen: testit loginille + tuotetestien jatkamista |
 ||||
 | yht   | 22,5   | | 

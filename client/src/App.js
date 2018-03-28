@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import { connect } from 'react-redux'
 import { initializeProducts, deleteProduct } from './reducers/productReducer'
 import { createNotification } from './reducers/notificationReducer'
@@ -39,30 +39,30 @@ class App extends React.Component {
             <div>
               <Link to="/">home</Link> &nbsp;
               <Link to="/products">products</Link> &nbsp;
-  {this.props.user && <Link to="/products/new">new product</Link>} &nbsp;
-  {this.props.user && this.props.user.username}
-  {this.props.user && <button onClick={this.props.logout}>log out</button>}
+              {this.props.user && <Link to="/products/new">new product</Link>} &nbsp;
+              {this.props.user && this.props.user.username}
+              {this.props.user && <button onClick={this.props.logout}>log out</button>}
               {this.props.user === null && <Link to="/login">login</Link>}
             </div>
-              <Notification message={this.props.notification} />
-              <h1>Tuotteet</h1>
-              <Switch>
-                <Route exact path="/" render={() => <Home user={this.props.user}/>} />
-                <Route exact path="/products" render={() => <ProductList />} />
-                <Route exact path="/products/new" render={() => <CreateProductForm />} />
-                {this.props.products.length > 0 && 
-                  <Route exact path="/products/:id" render={({match, history}) =>
-                    productById(match.params.id) 
+            <Notification message={this.props.notification} />
+            <h1>Tuotteet</h1>
+            <Switch>
+              <Route exact path="/" render={() => <Home user={this.props.user}/>} />
+              <Route exact path="/products" render={() => <ProductList />} />
+              <Route exact path="/products/new" render={() => <CreateProductForm />} />
+              {this.props.products.length > 0 &&
+                <Route exact path="/products/:id" render={({ match, history }) =>
+                  productById(match.params.id)
                     ? <Product product={productById(match.params.id)} deleteProduct={this.props.deleteProduct}
-                               history={history} createNotification={this.props.createNotification}/> 
+                      history={history} createNotification={this.props.createNotification}/>
                     : <Redirect to="/products" />
                 } /> }
-                <Route exact path="/login" render={() => <LoginForm login={this.props.login} />} />
-              </Switch>
+              <Route exact path="/login" render={() => <LoginForm login={this.props.login} />} />
+            </Switch>
           </div>
         </Router>
       </div>
-    );
+    )
   }
 }
 
