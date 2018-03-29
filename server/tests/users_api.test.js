@@ -3,10 +3,10 @@ const { app, server } = require('../index')
 const api = supertest(app)
 const User = require('../models/user')
 //const Product = require('../models/product')
-const { newUser, usersInDb, newUserCredentials } = require('./test_helper')
+const { newUser, usersInDb, newUserCredentials, newUser2Credentials,
+  dbUser, dbUserCredentials } = require('./test_helper')
 
 describe('testing the users api', async () => {
-
   beforeAll(async () => {
     await User.remove({})
     //Create a test user
@@ -63,42 +63,139 @@ describe('testing the users api', async () => {
       const response = await api
         .post('/api/users')
         .set('Content-type', 'application/json')
-        .send(newUserCredentials)
+        .send(newUser2Credentials)
         .expect(200)
         .expect('Content-Type', /application\/json/)
 
       console.log(response.body)
       const dbUsersAfter = await usersInDb()
-      expect(response.body.username).toEqual(newUserCredentials.username)
+      expect(response.body.username).toEqual(newUser2Credentials.username)
       expect(dbUsersAfter.length).toBe(dbUsersBefore.length+1)
     })
 
-    test.skip('new user with duplicate username cannot be added', async () => {
-      expect(true).toBe(true)
+    test('new user with duplicate username cannot be added', async () => {
+      //Add new user to the db so duplicate username can be tested:
+      await newUser.save()
+      const dbUsersBefore = await usersInDb()
+      expect(dbUsersBefore.length).toBeGreaterThan(0)
+
+      //Create user with a duplicate username
+      let duplicateUser = {
+        name: 'nimi',
+        username: dbUsersBefore[0].username,
+        password: 'salasana'
+      }
+
+      const response = await api
+        .post('/api/users')
+        .set('Content-type', 'application/json')
+        .send(duplicateUser)
+        .expect(400)
+        .expect('Content-Type', /application\/json/)
+
+      //console.log(response.body)
+      const dbUsersAfter = await usersInDb()
+      expect(response.body.error).toEqual('Username must be unique')
+      expect(dbUsersAfter.length).toBe(dbUsersBefore.length)
     })
 
-    test.skip('new user with too short password cannot be added', async () => {
-      expect(true).toBe(true)
+    test('new user with too short password cannot be added', async () => {
+      //Add new user to the db so duplicate username can be tested
+      const dbUsersBefore = await usersInDb()
+
+      let credentials = {
+        username: newUserCredentials.username,
+        password: 'short',
+        name: newUserCredentials.name
+      }
+
+      const response = await api
+        .post('/api/users')
+        .set('Content-type', 'application/json')
+        .send(credentials)
+        .expect(400)
+        .expect('Content-Type', /application\/json/)
+
+      //console.log(response.body)
+      const dbUsersAfter = await usersInDb()
+      expect(response.body.error).toEqual('Password must be at least 8 characters long')
+      expect(dbUsersAfter.length).toBe(dbUsersBefore.length)
     })
 
-    test.skip('new user cannot be added with invalid fields', async () => {
-      expect(true).toBe(true)
+    test('new user cannot be added with invalid fields', async () => {
+      const dbUsersBefore = await usersInDb()
+      //Create credentials without username:
+      let credentials = {
+        password: newUserCredentials.password,
+        name: newUserCredentials.name
+      }
+
+      const response = await api
+        .post('/api/users')
+        .set('Content-type', 'application/json')
+        .send(credentials)
+        .expect(400)
+        .expect('Content-Type', /application\/json/)
+
+      console.log(response.body)
+      const dbUsersAfter = await usersInDb()
+      expect(response.body.error).toEqual('A required field is missing')
+      expect(dbUsersAfter.length).toBe(dbUsersBefore.length)
+
+      //Create credentials without name:
+      credentials = {
+        username: newUserCredentials.username,
+        password: newUserCredentials.password
+      }
+
+      const response2 = await api
+        .post('/api/users')
+        .set('Content-type', 'application/json')
+        .send(credentials)
+        .expect(400)
+        .expect('Content-Type', /application\/json/)
+
+      console.log(response2.body)
+      let dbUsersAfter2 = await usersInDb()
+      expect(response2.body.error).toEqual('A required field is missing')
+      expect(dbUsersAfter2.length).toBe(dbUsersBefore.length)
     })
 
-    test.skip('new user cannot be created when logged in', async () => {
-      expect(true).toBe(true)
+    test('new user cannot be created while logged in', async () => {
+      //Create a new test user:
+      let user = await dbUser.save()
+      //console.log(user)
+      //Login with the created user credentials:
+      const dbUsersBefore = await usersInDb()
+      const loginRequest = await api
+        .post('/api/login')
+        .set('Content-type', 'application/json')
+        .send({
+          username: dbUserCredentials.username,
+          password: dbUserCredentials.password
+        })
+        .expect(200)
+      //Add token to the post request:
+      expect(loginRequest.body.token)
+      const token = loginRequest.body.token
+      const headers = { 'Authorization': `bearer ${token}` }
+
+      //Try to create a new user while logged in:
+      const response = await api
+        .post('/api/users')
+        .set(headers)
+        .set('Content-type', 'application/json')
+        .send(newUser2Credentials)
+        .expect(400)
+        .expect('Content-Type', /application\/json/)
+
+      console.log(response.body)
+      const dbUsersAfter = await usersInDb()
+      expect(response.body.error).toEqual('User is already logged in')
+      expect(dbUsersAfter.length).toBe(dbUsersBefore.length)
     })
   })
 
-  describe('other user tests', async () => {
-    test.skip('when user adds a new product, it is added to addedProducts', async () => {
-      expect(true).toBe(true)
-    })
-
-    test.skip('when a product is deleted, it is removed from addedProducts', async () => {
-      expect(true).toBe(true)
-    })
-  })
   afterAll(() => {
     server.close()
   })

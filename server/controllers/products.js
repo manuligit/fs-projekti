@@ -110,13 +110,14 @@ productsRouter.put('/:id', async (request, response) => {
 
 productsRouter.delete('/:id', async (request, response) => {
   try {
+    const id = request.params.id
     const decodedToken = jwt.verify(request.token, process.env.SECRET)
 
     if (!request.token || !decodedToken.id) {
       return response.status(401).json({ error: 'token missing or invalid' })
     }
 
-    await Product.findByIdAndRemove(request.params.id,
+    await Product.findByIdAndRemove(id,
       (err) => {
         if (err) {
           console.log(err.name)
@@ -126,6 +127,25 @@ productsRouter.delete('/:id', async (request, response) => {
         }
       }
     )
+
+    //Remove item from users list:
+    const user = await User.findById(decodedToken.id)
+    console.log(id)
+    console.log(user.addedProducts)
+    console.log(user.addedProducts.length)
+    
+    if (user.addedProducts.length === 1) {
+      console.log('hello addedproducts')
+      user.addedProducts = []
+    } else {
+      let list = [].concat(user.addedProducts)
+      const updatedProducts = list.filter(a => a !== id)
+      console.log(updatedProducts.length)
+      user.addedProducts = updatedProducts
+      console.log(updatedProducts)
+    }
+
+    await user.save()
   } catch (exception) {
     if (exception.name === 'CastError') {
       console.log('CastError')

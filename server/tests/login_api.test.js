@@ -6,7 +6,7 @@ const { newUser, newUserCredentials, bcryptUserCredentials } = require('./test_h
 const bcrypt = require('bcrypt')
 
 //For the login tests, bcrypt is disabled in test enviroment
-describe.skip('test with initialized products', async () => {
+describe('test with initialized products', async () => {
   describe('User can log using valid credentials', async () => {
     let bcryptUser = {}
     beforeAll(async () => {

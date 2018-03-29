@@ -48,7 +48,26 @@ function mockPasswordHash (password) {
 const newUserCredentials = {
   'name': 'Jani Jaskelin',
   'username': 'jake',
+  'password': password
+}
+
+const newUser2Credentials = {
+  'name': 'Mika Latola',
+  'username': 'mikkeller',
   'password': 'salasana'
+}
+
+const dbUser = new User({
+  'name': 'MVC Maija',
+  'username': 'mmmmjau',
+  'password': 'kirsikkatomaatti',
+  'passwordHash': mockPasswordHash('kirsikkatomaatti')
+})
+
+const dbUserCredentials = {
+  'name': 'MVC Maija',
+  'username': 'mmmmjau',
+  'password': 'kirsikkatomaatti'
 }
 
 const productsInDb = async () => {
@@ -67,10 +86,17 @@ const newProduct = {
   'price': 3.99
 }
 
+const newProduct2 = {
+  'name': 'Suppilovahvero',
+  'category': 'Sienet',
+  'price': 4.99
+}
+
 const invalidHeaders = { 'Authorization': 'bearer thisisnotavalidtoken' }
 
 
 module.exports = {
   initialProducts, productsInDb, usersInDb, newUser, newUserCredentials,
-  mockPasswordHash, bcryptUserCredentials, newProduct, invalidHeaders
+  mockPasswordHash, bcryptUserCredentials, newProduct, invalidHeaders,
+  newUser2Credentials, dbUser, dbUserCredentials, newProduct2
 }

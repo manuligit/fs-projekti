@@ -4,9 +4,9 @@ const api = supertest(app)
 const Product = require('../models/product')
 const User = require('../models/user')
 const { initialProducts, productsInDb,  newUser, newUserCredentials, newProduct,
-  invalidHeaders } = require('./test_helper')
+  invalidHeaders, newProduct2 } = require('./test_helper')
 
-describe.skip('testing the products api', async () => {
+describe('testing the products api', async () => {
   let token = ''
   let headers = ''
 
@@ -95,7 +95,6 @@ describe.skip('testing the products api', async () => {
       const afterProducts = await productsInDb()
       expect(beforeProducts.length+1).toBe(afterProducts.length)
       console.log(response.body)
-      //check that added item is owned by the user that added it
     })
 
     test('products cannot be posted to server without a token', async () => {
@@ -252,6 +251,41 @@ describe.skip('testing the products api', async () => {
       expect(dbItemsBefore.length).toBe(dbItemsAfter.length+1)
       expect(dbItemsBefore).toContain(item)
       expect(dbItemsAfter).not.toContain(item)
+    })
+  })
+
+  describe('user+product tests', async () => {
+    beforeAll(async () => {
+      //Initialize product database so that there are at least 2 products:
+      //await Product.remove({})
+    })
+
+    test.only('when user adds a new product, it is added to addedProducts and removed on delete', async () => {
+      const request = await api
+        .post('/api/products')
+        .set(headers)
+        .send(newProduct)
+        .expect(200)
+        .expect('Content-Type', /application\/json/)
+
+      await api
+        .post('/api/products')
+        .set(headers)
+        .send(newProduct2)
+        .expect(200)
+        .expect('Content-Type', /application\/json/)
+        
+      //console.log(request.body)
+      let user = await User.findOne({ username: newUserCredentials.username })
+      expect(user.addedProducts).toContain(request.body.id)
+
+      await api
+        .delete(`/api/products/${request.body.id}`)
+        .set(headers)
+        .expect(204)
+
+      let user2 = await User.findOne({ username: newUserCredentials.username })
+      expect(user2.addedProducts).not.toContain(request.body.id)
     })
   })
 

@@ -31,6 +31,15 @@ usersRouter.get('/:id', async (request, response) => {
 usersRouter.post('/', async (request, response) => {
   try {
     const body = request.body
+    console.log(request.get('Authorization'))
+    var requestType = request.get('Authorization')
+
+    if (requestType && requestType.length > 0) {
+      console.log('hello requesttype')
+      response.status(400).json({ error: 'User is already logged in' })
+      return
+    }
+    //console.log(body)
 
     const existingUser = await User.find({ username: body.username })
     if (existingUser.length>0) {
@@ -61,8 +70,12 @@ usersRouter.post('/', async (request, response) => {
     response.json(User.format(savedUser))
 
   } catch (exception) {
-    console.log(exception)
-    response.status(500).json({ error: 'Something went wrong.' })
+    if (exception.name === 'ValidationError') {
+      response.status(400).json({ error: 'A required field is missing' })
+    } else {
+      console.log(exception)
+      response.status(500).json({ error: 'Something went wrong.' })
+    }
   }
 })
 
