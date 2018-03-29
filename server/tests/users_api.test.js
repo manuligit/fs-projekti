@@ -90,6 +90,15 @@ describe('testing the users api', async () => {
     })
   })
 
+  describe('other user tests', async () => {
+    test.skip('when user adds a new product, it is added to addedProducts', async () => {
+      expect(true).toBe(true)
+    })
+
+    test.skip('when a product is deleted, it is removed from addedProducts', async () => {
+      expect(true).toBe(true)
+    })
+  })
   afterAll(() => {
     server.close()
   })
