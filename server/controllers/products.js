@@ -133,7 +133,7 @@ productsRouter.delete('/:id', async (request, response) => {
     console.log(id)
     console.log(user.addedProducts)
     console.log(user.addedProducts.length)
-    
+
     if (user.addedProducts.length === 1) {
       console.log('hello addedproducts')
       user.addedProducts = []

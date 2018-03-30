@@ -163,7 +163,7 @@ describe('testing the users api', async () => {
 
     test('new user cannot be created while logged in', async () => {
       //Create a new test user:
-      let user = await dbUser.save()
+      await dbUser.save()
       //console.log(user)
       //Login with the created user credentials:
       const dbUsersBefore = await usersInDb()

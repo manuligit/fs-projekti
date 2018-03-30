@@ -274,7 +274,7 @@ describe('testing the products api', async () => {
         .send(newProduct2)
         .expect(200)
         .expect('Content-Type', /application\/json/)
-        
+
       //console.log(request.body)
       let user = await User.findOne({ username: newUserCredentials.username })
       expect(user.addedProducts).toContain(request.body.id)
