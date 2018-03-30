@@ -4,7 +4,7 @@ const api = supertest(app)
 const User = require('../models/user')
 //const Product = require('../models/product')
 const { newUser, usersInDb, newUserCredentials, newUser2Credentials,
-  dbUser, dbUserCredentials } = require('./test_helper')
+  dbUser, dbUserCredentials, initialUsers } = require('./test_helper')
 
 describe('testing the users api', async () => {
   beforeAll(async () => {
@@ -13,7 +13,7 @@ describe('testing the users api', async () => {
     await newUser.save()
   })
 
-  describe('users-get tests', async () => {
+  describe.skip('users-get tests', async () => {
     test('users are returned as json', async () => {
       await api
         .get('/api/users')
@@ -52,7 +52,7 @@ describe('testing the users api', async () => {
     })
   })
 
-  describe('users-post tests', async () => {
+  describe.skip('users-post tests', async () => {
     beforeAll(async () => {
       await User.remove({})
     })
@@ -194,6 +194,83 @@ describe('testing the users api', async () => {
       expect(response.body.error).toEqual('User is already logged in')
       expect(dbUsersAfter.length).toBe(dbUsersBefore.length)
     })
+  })
+
+  describe('users-update tests', async () => {
+    //Create variables to be used in update tests:
+    let token
+    let headers
+    let user = {}
+    let user2 = {}
+
+    beforeAll(async () => {
+      User.remove({})
+      //Create a new test user:
+      const promiseArray = initialUsers.map(user => user.save())
+      await Promise.all(promiseArray)
+
+      //Login with the created user credentials:
+      const loginRequest = await api
+        .post('/api/login')
+        .set('Content-type', 'application/json')
+        .send({
+          username: dbUserCredentials.username,
+          password: dbUserCredentials.password
+        })
+        .expect(200)
+      
+      user = await User.findOne({ username: dbUser.username })
+      //user2 = await User.findOne({ username: newUser.username })
+      console.log(user)
+      console.log(user2)
+      const dbUsers = await usersInDb()
+      //expect(dbUsers.length).toBeGreaterThan(0)
+      console.log(dbUsers)
+      token = loginRequest.body.token
+      headers = { 'Authorization': `bearer ${token}` }
+    })
+
+    test('database should contain users to be updated', async () => {
+      const dbUsers = await usersInDb()
+      expect(dbUsers.length).toBeGreaterThan(0)
+      console.log(dbUsers)
+    })
+
+    test('user can update his own info', async () => {
+      let updatedUser = Object.assign({}, dbUser)
+      updatedUser.name = 'Uusinimi'
+
+      const response = await api
+        .put(`/api/users/${user.id}`)
+        .set(headers)
+        .send(updatedUser)
+        .expect(200)
+        .expect('Content-Type', /application\/json/)
+
+      expect(response.body.name).toEqual('Uusinimi')
+    })
+
+    test.skip('user cannot update other user info', async () => {
+      let updatedUser = Object.assign({}, dbUser)
+      updatedUser.name = 'Uusinimi'
+
+      const response = await api
+        .put(`/api/users/${user2.id}`)
+        .set(headers)
+        .send(updatedUser)
+        .expect(200)
+        .expect('Content-Type', /application\/json/)
+
+      console.log(response.body)
+    })
+
+    test.skip('user info is validated', async () => {
+      expect(true).toBe(true)
+    })
+  })
+
+  describe.skip('users-delete tests', async () => {
+
   })
 
   afterAll(() => {

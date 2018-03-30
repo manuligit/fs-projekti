@@ -2,6 +2,8 @@ const usersRouter = require('express').Router()
 const User = require('../models/user')
 const bcrypt = require('bcrypt')
 const config = require('../utils/config')
+const jwt = require('jsonwebtoken')
+const saltRounds = 10
 
 usersRouter.get('/', async (request, response) => {
   try {
@@ -31,9 +33,9 @@ usersRouter.get('/:id', async (request, response) => {
 usersRouter.post('/', async (request, response) => {
   try {
     const body = request.body
-    console.log(request.get('Authorization'))
+    //console.log(request.get('Authorization'))
     var requestType = request.get('Authorization')
-
+    //Do not let logged users create a new user:
     if (requestType && requestType.length > 0) {
       console.log('hello requesttype')
       response.status(400).json({ error: 'User is already logged in' })
@@ -49,7 +51,6 @@ usersRouter.post('/', async (request, response) => {
       return response.status(400).json({ error: 'Password must be at least 8 characters long' })
     }
 
-    const saltRounds = 10
     let passwordHash
     //do tests without bcrypt:
     if (process.env.NODE_ENV === 'test') {
@@ -81,11 +82,54 @@ usersRouter.post('/', async (request, response) => {
 
 usersRouter.put('/:id', async (request, response) => {
   try {
-    //const body = request.body
-    //to be continues
+    const body = request.body
+    console.log(body)
+
+    //Only allow logged users edit products:
+    const decodedToken = jwt.verify(request.token, process.env.SECRET)
+    if (!request.token || !decodedToken.id) {
+      return response.status(401).json({ error: 'token missing or invalid' })
+    }
+
+    let passwordHash = ''
+    //If password is updated, also update the hash:
+    if (body.password) {
+      passwordHash = await bcrypt.hash(body.password, saltRounds)
+    }
+
+    if (passwordHash.length > 0) {
+      User.findByIdAndUpdate(request.params.id,
+        { username: body.username, name: body.name, passwordHash: passwordHash },
+        { new: true },
+        (err, user) => {
+          if (err) { response.status(404).send({ error: 'Id not found' })
+          } else {
+            return response.json(User.format(user))
+          }
+        })
+    } else {
+      User.findByIdAndUpdate(request.params.id,
+        { username: body.username, name: body.name },
+        { new: true },
+        (err, user) => {
+          if (err) { response.status(404).send({ error: 'Id not found' })
+          } else {
+            return response.json(User.format(user))
+          }
+        })
+
+    }
   } catch (exception) {
-    console.log(exception)
-    response.status(500).json({ error: 'Something went wrong.' })
+    if (exception.name === 'ValidationError') {
+      response.status(400).json({ error: 'A required field is missing' })
+    } else if (exception.name === 'JsonWebTokenError' ) {
+      response.status(401).json({ error: 'You need to be logged in to update user info' })
+    } else if (exception.name === 'CastError') {
+      console.log('CastError')
+    } else {
+      console.log(exception.name)
+      response.status(500).json({ error: 'Something went wrong.' })
+    }
   }
 })
 
@@ -101,7 +145,7 @@ usersRouter.delete('/:id', async (request, response) => {
     } else {
       return response.status(400).json({ error: 'User could not be deleted' })
     }
-
+    //remove user from item?
   } catch (exception) {
     console.log(exception)
     response.status(500).json({ error: 'Something went wrong.' })

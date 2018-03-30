@@ -92,11 +92,12 @@ const newProduct2 = {
   'price': 4.99
 }
 
-const invalidHeaders = { 'Authorization': 'bearer thisisnotavalidtoken' }
+const initialUsers = [newUser, dbUser]
 
+const invalidHeaders = { 'Authorization': 'bearer thisisnotavalidtoken' }
 
 module.exports = {
   initialProducts, productsInDb, usersInDb, newUser, newUserCredentials,
   mockPasswordHash, bcryptUserCredentials, newProduct, invalidHeaders,
-  newUser2Credentials, dbUser, dbUserCredentials, newProduct2
+  newUser2Credentials, dbUser, dbUserCredentials, newProduct2, initialUsers
 }
