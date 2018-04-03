@@ -42,7 +42,7 @@ usersRouter.post('/', async (request, response) => {
       response.status(400).json({ error: 'User is already logged in' })
       return
     }
-    console.log(body)
+    //console.log(body)
 
     const existingUser = await User.find({ username: body.username })
     if (existingUser.length>0) {
@@ -68,9 +68,9 @@ usersRouter.post('/', async (request, response) => {
       passwordHash
     })
 
-    console.log(user)
+    //console.log(user)
     const savedUser = await user.save()
-    console.log(savedUser)
+    //console.log(savedUser)
     response.json(User.format(savedUser))
 
   } catch (exception) {
@@ -86,7 +86,7 @@ usersRouter.post('/', async (request, response) => {
 usersRouter.put('/:id', async (request, response) => {
   try {
     const body = request.body
-    console.log(body)
+    //console.log(body)
 
     //Only allow logged users edit products:
     const decodedToken = jwt.verify(request.token, process.env.SECRET)

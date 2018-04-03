@@ -67,7 +67,7 @@ describe('testing the users api', async () => {
         .expect(200)
         .expect('Content-Type', /application\/json/)
 
-      console.log(response.body)
+      //console.log(response.body)
       const dbUsersAfter = await usersInDb()
       expect(response.body.username).toEqual(newUser2Credentials.username)
       expect(dbUsersAfter.length).toBe(dbUsersBefore.length+1)
@@ -137,7 +137,7 @@ describe('testing the users api', async () => {
         .expect(400)
         .expect('Content-Type', /application\/json/)
 
-      console.log(response.body)
+      //console.log(response.body)
       const dbUsersAfter = await usersInDb()
       expect(response.body.error).toEqual('A required field is missing')
       expect(dbUsersAfter.length).toBe(dbUsersBefore.length)
@@ -155,7 +155,7 @@ describe('testing the users api', async () => {
         .expect(400)
         .expect('Content-Type', /application\/json/)
 
-      console.log(response2.body)
+      //console.log(response2.body)
       let dbUsersAfter2 = await usersInDb()
       expect(response2.body.error).toEqual('A required field is missing')
       expect(dbUsersAfter2.length).toBe(dbUsersBefore.length)
@@ -189,14 +189,15 @@ describe('testing the users api', async () => {
         .expect(400)
         .expect('Content-Type', /application\/json/)
 
-      console.log(response.body)
+      //console.log(response.body)
       const dbUsersAfter = await usersInDb()
       expect(response.body.error).toEqual('User is already logged in')
       expect(dbUsersAfter.length).toBe(dbUsersBefore.length)
     })
   })
 
-  describe('users-update tests', async () => {
+  describe.only('users-update tests', async () => {
+    console.log('***********************************')
     //Create variables to be used in update tests:
     let token
     let headers
@@ -220,7 +221,7 @@ describe('testing the users api', async () => {
           password: dbUserCredentials.password
         })
         .expect(200)
-
+      console.log(loginRequest)
       user = await User.findOne({ username: dbUser.username })
       user2 = await User.findOne({ username: newUser.username })
       console.log(user)
@@ -253,20 +254,20 @@ describe('testing the users api', async () => {
     })
 
     test.skip('user cannot update other user info', async () => {
-      await newUser.save()
-      let updatedUser = Object.assign({}, dbUser)
-      updatedUser.name = 'Uusinimi'
-      user2 = await User.findOne({ username: newUser.username })
-      console.log(user2)
+      // await newUser.save()
+      // let updatedUser = Object.assign({}, dbUser)
+      // updatedUser.name = 'Uusinimi'
+      // user2 = await User.findOne({ username: newUser.username })
+      // console.log(user2)
 
-      const response = await api
-        .put(`/api/users/${user2.id}`)
-        .set(headers)
-        .send(updatedUser)
-        .expect(200)
-        .expect('Content-Type', /application\/json/)
+      // const response = await api
+      //   .put(`/api/users/${user2.id}`)
+      //   .set(headers)
+      //   .send(updatedUser)
+      //   .expect(401)
+      //   .expect('Content-Type', /application\/json/)
 
-      console.log(response.body)
+      // console.log(response.body)
     })
 
     test.skip('user info is validated', async () => {
