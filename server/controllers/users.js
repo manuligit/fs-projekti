@@ -38,16 +38,19 @@ usersRouter.post('/', async (request, response) => {
     //Do not let logged users create a new user:
     if (requestType && requestType.length > 0) {
       console.log('hello requesttype')
+      console.log('User is already logged in')
       response.status(400).json({ error: 'User is already logged in' })
       return
     }
-    //console.log(body)
+    console.log(body)
 
     const existingUser = await User.find({ username: body.username })
     if (existingUser.length>0) {
+      console.log('Username must be unique')
       return response.status(400).json({ error: 'Username must be unique' })
     }
     if (body.password.length < 8) {
+      console.log('Password must be at least 8 characters long')
       return response.status(400).json({ error: 'Password must be at least 8 characters long' })
     }
 
@@ -72,6 +75,7 @@ usersRouter.post('/', async (request, response) => {
 
   } catch (exception) {
     if (exception.name === 'ValidationError') {
+      
       response.status(400).json({ error: 'A required field is missing' })
     } else {
       console.log(exception)

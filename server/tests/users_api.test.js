@@ -204,10 +204,12 @@ describe('testing the users api', async () => {
     let user2 = {}
 
     beforeAll(async () => {
-      User.remove({})
+      await User.remove({})
       //Create a new test user:
       const promiseArray = initialUsers.map(user => user.save())
       await Promise.all(promiseArray)
+      const dbUsers = await usersInDb()
+      console.log(dbUsers)
 
       //Login with the created user credentials:
       const loginRequest = await api
@@ -220,10 +222,10 @@ describe('testing the users api', async () => {
         .expect(200)
 
       user = await User.findOne({ username: dbUser.username })
-      //user2 = await User.findOne({ username: newUser.username })
+      user2 = await User.findOne({ username: newUser.username })
       console.log(user)
       console.log(user2)
-      const dbUsers = await usersInDb()
+      //const dbUsers = await usersInDb()
       //expect(dbUsers.length).toBeGreaterThan(0)
       console.log(dbUsers)
       token = loginRequest.body.token
@@ -251,8 +253,11 @@ describe('testing the users api', async () => {
     })
 
     test.skip('user cannot update other user info', async () => {
+      await newUser.save()
       let updatedUser = Object.assign({}, dbUser)
       updatedUser.name = 'Uusinimi'
+      user2 = await User.findOne({ username: newUser.username })
+      console.log(user2)
 
       const response = await api
         .put(`/api/users/${user2.id}`)

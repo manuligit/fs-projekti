@@ -12,6 +12,7 @@ const path = require('path')
 const morgan = require('morgan')
 const config = require('./utils/config')
 const http = require('http')
+mongoose.Promise = Promise
 
 mongoose
   .connect(config.mongoUrl)
