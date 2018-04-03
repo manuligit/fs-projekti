@@ -12,6 +12,7 @@ import ProductList from './components/ProductList'
 import CreateProductForm from './components/CreateProductForm'
 import { BrowserRouter as Router, Route, Link, Switch, Redirect } from 'react-router-dom'
 import RegisterForm from './components/RegisterForm'
+import './App.css'
 
 class App extends React.Component {
   componentWillMount() {
