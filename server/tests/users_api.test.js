@@ -13,7 +13,7 @@ describe('testing the users api', async () => {
     await newUser.save()
   })
 
-  describe.skip('users-get tests', async () => {
+  describe('users-get tests', async () => {
     test('users are returned as json', async () => {
       await api
         .get('/api/users')
@@ -52,7 +52,7 @@ describe('testing the users api', async () => {
     })
   })
 
-  describe.skip('users-post tests', async () => {
+  describe('users-post tests', async () => {
     beforeAll(async () => {
       await User.remove({})
     })

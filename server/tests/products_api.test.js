@@ -260,7 +260,7 @@ describe('testing the products api', async () => {
       //await Product.remove({})
     })
 
-    test.only('when user adds a new product, it is added to addedProducts and removed on delete', async () => {
+    test('when user adds a new product, it is added to addedProducts and removed on delete', async () => {
       const request = await api
         .post('/api/products')
         .set(headers)

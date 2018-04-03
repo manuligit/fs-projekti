@@ -4,7 +4,7 @@ import Togglable from './Togglable'
 import EditUserForm from './EditUserForm'
 
 const User = ({ user }) => {
-  console.log('home propsuser', user)
+  console.log('User propsuser', user)
   return (
     <div>
       <h2>Welcome {user.name}!</h2>

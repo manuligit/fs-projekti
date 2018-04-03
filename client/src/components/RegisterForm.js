@@ -12,7 +12,6 @@ class RegisterForm extends React.Component {
       event.target.username.value,
       event.target.password.value
     )
-
     this.props.createNotification(`User ${event.target.username.value} created successfully`)
   }
 

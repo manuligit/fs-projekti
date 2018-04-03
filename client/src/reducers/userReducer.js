@@ -2,7 +2,8 @@ import userService from '../services/users'
 
 const userReducer = (state = [], action) => {
   switch (action.type) {
-    case 'INIT':
+    case 'INIT_USERS':
+      console.log('userreducer', action.data)
       return action.data
     case 'NEW_USER':
       return [...state, action.data]
@@ -21,7 +22,7 @@ export const initializeUsers = () => {
   return async (dispatch) => {
     const users = await userService.getAll()
     dispatch({
-      type: 'INIT',
+      type: 'INIT_USERS',
       data: users
     })
   }
@@ -33,7 +34,7 @@ export const createUser = (name, username, password) => {
     const newUser = await userService.create(content)
     console.log('Userreducer newUser:', newUser)
     dispatch({
-      type: 'NEW_User',
+      type: 'NEW_USER',
       data: newUser
     })
   }
@@ -44,7 +45,7 @@ export const updateUser = (id, name, username, password) => {
     const content = { name: name, username: username, password: password }
     const updatedUser = await userService.update(id, content)
     dispatch({
-      type: 'UPDATE_USER_LIST',
+      type: 'UPDATE_USER',
       data: updatedUser
     })
   }

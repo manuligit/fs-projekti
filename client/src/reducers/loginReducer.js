@@ -1,5 +1,6 @@
 import loginService from '../services/login'
 import productService from '../services/products'
+import userService from '../services/users'
 
 const loginReducer = (state = null, action) => {
   switch (action.type) {
@@ -10,6 +11,8 @@ const loginReducer = (state = null, action) => {
       state = null
       return state
     case 'AUTHENTICATE':
+      return action.data
+    case 'UPDATE_USER':
       return action.data
     case 'UPDATE_USER_PRODUCT_LIST': {
       let copyProducts = state.addedProducts.slice()
@@ -51,6 +54,7 @@ export const login = (credentials) => {
     const user = await loginService.login(credentials)
     window.localStorage.setItem('loggedUser', JSON.stringify(user))
     productService.setToken(user.token)
+    userService.setToken(user.token)
     dispatch ({
       type: 'LOGIN',
       data: user
@@ -61,6 +65,7 @@ export const login = (credentials) => {
 export const authenticateUser = (user) => {
   return (dispatch) => {
     productService.setToken(user.token)
+    userService.setToken(user.token)
     dispatch({
       type: 'AUTHENTICATE',
       data: user
@@ -71,6 +76,7 @@ export const authenticateUser = (user) => {
 export const logout = () => {
   return (dispatch) => {
     productService.setToken(null)
+    userService.setToken(null)
     window.localStorage.clear()
     dispatch({
       type: 'LOGOUT'

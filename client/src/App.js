@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { initializeProducts, deleteProduct } from './reducers/productReducer'
 import { createNotification } from './reducers/notificationReducer'
 import { login, authenticateUser, logout } from './reducers/loginReducer'
+import { initializeUsers } from './reducers/userReducer'
 import Home from './components/Home'
 import LoginForm from './components/LoginForm'
 import Notification from './components/Notification'
@@ -16,6 +17,7 @@ class App extends React.Component {
   componentWillMount() {
     console.log('mounted')
     this.props.initializeProducts()
+    this.props.initializeUsers()
     //console.log(this.props.products)
 
     const loggedUserJSON = window.localStorage.getItem('loggedUser')
@@ -23,7 +25,7 @@ class App extends React.Component {
       const user = JSON.parse(loggedUserJSON)
       //console.log('app.js componentwillmount user: ', user)
       //const propsuser = this.props.user
-      //console.log('this.props user: ', propsuser)
+      console.log('this.props user: ', this.props.user)
 
       this.props.authenticateUser(user)
     }
@@ -74,12 +76,14 @@ const mapStateToProps = (state) => {
   return {
     products: state.products,
     notification: state.notification,
-    user: state.user
+    user: state.user,
+    users: state.users
   }
 }
 
 const mapDispatchToProps = {
-  initializeProducts, deleteProduct, createNotification, login, authenticateUser, logout
+  initializeProducts, deleteProduct, createNotification, login, authenticateUser, logout,
+  initializeUsers
 }
 
 export default connect (

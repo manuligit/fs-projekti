@@ -110,6 +110,7 @@ usersRouter.put('/:id', async (request, response) => {
             return response.json(User.format(user))
           }
         })
+        .populate('addedProducts', { id: 1, name: 1 })
     } else {
       User.findByIdAndUpdate(request.params.id,
         { username: body.username, name: body.name },
@@ -120,6 +121,7 @@ usersRouter.put('/:id', async (request, response) => {
             return response.json(User.format(user))
           }
         })
+        .populate('addedProducts', { id: 1, name: 1 })
 
     }
   } catch (exception) {
