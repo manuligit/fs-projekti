@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import User from './User'
 
 const Home = ({ user }) => {
   if (user === null) {
@@ -9,20 +9,8 @@ const Home = ({ user }) => {
       </div>
     )
   } else {
-    console.log('home propsuser', user)
     return (
-      <div>
-        <h2>Welcome {user.name}!</h2>
-        {user.addedProducts &&
-          <div>You have added {user.addedProducts.length} products</div>}
-        {user.addedProducts && console.log(user.addedProducts)}
-        {user.addedProducts &&
-        user.addedProducts.map(product =>
-          <li key={product._id}>
-            <Link to={`/products/${product._id}`}>{product.name}</Link>
-          </li>
-        )}
-      </div>
+      <User user={user} />
     )
   }
 }

@@ -31,10 +31,10 @@ class CreateProductForm extends React.Component {
       <div>
         <h3> Create new product </h3>
         <form onSubmit={this.addProduct}>
-          <div> Name <input type="text" name="name" /> </div>
-          <div> Category <input type="text" name="category" /> </div>
-          <div> Price <input type="number" name="price" /> </div>
-          <button>lisää</button>
+          <div> Name <input type="text" name="name" required/> </div>
+          <div> Category <input type="text" name="category" required/> </div>
+          <div> Price <input type="number" name="price" required/> </div>
+          <button>Create</button>
         </form>
       </div>
     )

@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { initializeProducts, deleteProduct } from './reducers/productReducer'
 import { createNotification } from './reducers/notificationReducer'
-import { login, authenticateUser, logout } from './reducers/userReducer'
+import { login, authenticateUser, logout } from './reducers/loginReducer'
 import Home from './components/Home'
 import LoginForm from './components/LoginForm'
 import Notification from './components/Notification'
@@ -10,6 +10,7 @@ import Product from './components/Product'
 import ProductList from './components/ProductList'
 import CreateProductForm from './components/CreateProductForm'
 import { BrowserRouter as Router, Route, Link, Switch, Redirect } from 'react-router-dom'
+import RegisterForm from './components/RegisterForm'
 
 class App extends React.Component {
   componentWillMount() {
@@ -43,6 +44,7 @@ class App extends React.Component {
               {this.props.user && this.props.user.username}
               {this.props.user && <button onClick={this.props.logout}>log out</button>}
               {this.props.user === null && <Link to="/login">login</Link>}
+              {this.props.user === null && <Link to="/register">register</Link>}
             </div>
             <Notification message={this.props.notification} />
             <h1>Tuotteet</h1>
@@ -58,6 +60,8 @@ class App extends React.Component {
                     : <Redirect to="/products" />
                 } /> }
               <Route exact path="/login" render={() => <LoginForm login={this.props.login} />} />
+              <Route exact path="/register" render={() => <RegisterForm/>} />
+
             </Switch>
           </div>
         </Router>

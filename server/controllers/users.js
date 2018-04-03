@@ -75,7 +75,6 @@ usersRouter.post('/', async (request, response) => {
 
   } catch (exception) {
     if (exception.name === 'ValidationError') {
-      
       response.status(400).json({ error: 'A required field is missing' })
     } else {
       console.log(exception)

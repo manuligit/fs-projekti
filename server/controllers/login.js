@@ -11,8 +11,6 @@ loginRouter.post('/', async (request, response) => {
     const user = await User.findOne({ username: body.username })
       .populate('addedProducts', { id: 1, name: 1 })
 
-    //console.log('loginrouter user: ', user)
-
     let passwordCorrect
 
     //skip bcrypt compare when testing:
@@ -47,7 +45,7 @@ loginRouter.post('/', async (request, response) => {
 
     const token = jwt.sign(userForToken, process.env.SECRET)
 
-    response.status(200).send({ token, username: user.username, name: user.name, addedProducts: user.addedProducts })
+    response.status(200).send({ token, id: user.id, username: user.username, name: user.name, addedProducts: user.addedProducts })
   } catch (exception) {
     console.log(exception)
     response.status(500).json({ error: 'Something broke' })
