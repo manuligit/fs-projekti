@@ -218,7 +218,7 @@ describe('testing the users api', async () => {
           password: dbUserCredentials.password
         })
         .expect(200)
-      
+
       user = await User.findOne({ username: dbUser.username })
       //user2 = await User.findOne({ username: newUser.username })
       console.log(user)
