@@ -22,5 +22,6 @@
 | 28.3 | 3 | Tuotteiden api-testit valmiit, aloitettu käyttäjien api-testit |
 | 29.3. | 2 | Käyttäjien api-testejä jatkettu |
 | 30.3. | 1 | Käyttäjän päivitys kontrolleriin + api-testit aloitettu |
+| yht   | 35   | |
 ||||
-| yht   | 33,5   | |
+| yht   | 35   | |
