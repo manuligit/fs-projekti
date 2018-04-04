@@ -9,6 +9,7 @@ usersRouter.get('/', async (request, response) => {
   try {
     const users = await User.find({})
       .populate('addedProducts', { id: 1, name: 1 })
+      .populate('favoriteProducts', { id: 1, name: 1 })
     response.json(users.map(User.format))
   } catch (exception) {
     console.log(exception)
@@ -19,7 +20,8 @@ usersRouter.get('/', async (request, response) => {
 usersRouter.get('/:id', async (request, response) => {
   try {
     await User.findById(request.params.id)
-      .populate('addedProducts', { id: 1, name: 1 }).
+      .populate('addedProducts', { id: 1, name: 1 })
+      .populate('favoriteProducts', { id: 1, name: 1 }).
       exec (function (err, user) {
         if (err) return response.status(404).send({ error: 'Id not found' })
         return response.json(User.format(user))
@@ -86,7 +88,7 @@ usersRouter.post('/', async (request, response) => {
 usersRouter.put('/:id', async (request, response) => {
   try {
     const body = request.body
-    //console.log(body)
+    console.log('usersrouter request body', body)
 
     //Only allow logged users edit products:
     const decodedToken = jwt.verify(request.token, process.env.SECRET)
@@ -102,7 +104,7 @@ usersRouter.put('/:id', async (request, response) => {
 
     if (passwordHash.length > 0) {
       User.findByIdAndUpdate(request.params.id,
-        { username: body.username, name: body.name, passwordHash: passwordHash },
+        { username: body.username, name: body.name, passwordHash: passwordHash, favoriteProducts: body.favoriteProducts },
         { new: true },
         (err, user) => {
           if (err) { response.status(404).send({ error: 'Id not found' })
@@ -111,17 +113,19 @@ usersRouter.put('/:id', async (request, response) => {
           }
         })
         .populate('addedProducts', { id: 1, name: 1 })
+        .populate('favoriteProducts', { id: 1, name: 1 })
     } else {
       User.findByIdAndUpdate(request.params.id,
-        { username: body.username, name: body.name },
+        { username: body.username, name: body.name, favoriteProducts: body.favoriteProducts },
         { new: true },
         (err, user) => {
-          if (err) { response.status(404).send({ error: 'Id not found' })
+          if (err) { console.log(err.error), response.status(404).send({ error: 'Id not found' })
           } else {
             return response.json(User.format(user))
           }
         })
         .populate('addedProducts', { id: 1, name: 1 })
+        .populate('favoriteProducts', { id: 1, name: 1 })
 
     }
   } catch (exception) {

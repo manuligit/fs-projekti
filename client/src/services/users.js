@@ -15,15 +15,15 @@ const getOne =  async (id) => {
 }
 
 const setToken = (newToken) => {
-  token = `bearer ${newToken}`
-  config = {
-    headers: { 'Authorization': token }
+  if (newToken) {
+    token = `bearer ${newToken}`
+    config = {
+      headers: { 'Authorization': token }
+    }
+  } else {
+    token = null
+    config = null
   }
-}
-
-const removeToken = () => {
-  token = null
-  config = null
 }
 
 const create = async (newObject) => {
@@ -46,4 +46,4 @@ const remove = async (id) => {
   return response.data
 }
 
-export default { getAll, getOne, create, update, remove, setToken, removeToken }
+export default { getAll, getOne, create, update, remove, setToken }

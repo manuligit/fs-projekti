@@ -2,6 +2,7 @@ import axios from 'axios'
 const baseUrl = 'http://localhost:3001/api/products'
 
 let token = null
+let config = null
 
 const getAll = async () => {
   const response = await axios.get(baseUrl)
@@ -14,14 +15,18 @@ const getOne =  async (id) => {
 }
 
 const setToken = (newToken) => {
-  token = `bearer ${newToken}`
+  if (newToken) {
+    token = `bearer ${newToken}`
+    config = {
+      headers: { 'Authorization': token }
+    }
+  } else {
+    token = null
+    config = null
+  }
 }
 
 const create = async (newObject) => {
-  const config = {
-    headers: { 'Authorization': token }
-  }
-
   const response = await axios.post(baseUrl, newObject, config)
   return response.data
 }

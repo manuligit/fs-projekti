@@ -11,6 +11,10 @@ const User = ({ user }) => {
       <Togglable buttonLabel="Edit user info">
         <EditUserForm user={user} />
       </Togglable>
+      {user.favoriteProducts && <div>You <i className='fas fa-heart' /> {user.favoriteProducts.length} products</div>}
+      {user.favoriteProducts &&
+      user.favoriteProducts.map(product => <li key={product._id+'fav'}>{product.name}</li>)}
+
       {user.addedProducts &&
         <div>You have added {user.addedProducts.length} products</div>}
       {user.addedProducts && console.log(user.addedProducts)}

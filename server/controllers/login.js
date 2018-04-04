@@ -10,6 +10,7 @@ loginRouter.post('/', async (request, response) => {
     //console.log('loginRouter request.body: ', body)
     const user = await User.findOne({ username: body.username })
       .populate('addedProducts', { id: 1, name: 1 })
+      .populate('favoriteProducts', { id: 1, name: 1 })
 
     let passwordCorrect
 
@@ -45,7 +46,8 @@ loginRouter.post('/', async (request, response) => {
 
     const token = jwt.sign(userForToken, process.env.SECRET)
 
-    response.status(200).send({ token, id: user.id, username: user.username, name: user.name, addedProducts: user.addedProducts })
+    response.status(200).send({ token, id: user.id, username: user.username, name: user.name,
+      addedProducts: user.addedProducts, favoriteProducts: user.favoriteProducts })
   } catch (exception) {
     console.log(exception)
     response.status(500).json({ error: 'Something broke' })
