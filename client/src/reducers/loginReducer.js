@@ -48,16 +48,14 @@ const loginReducer = (state = null, action) => {
       return { ...state, addedProducts: products }
     }
     case 'ADD_PRODUCT_TO_FAVORITES': {
-      //create the new product list for state
-      let products = state.favoriteProducts.slice()
-      let item = { ...action.data }
-      //rename id field to _id:
-      item._id = item.id
-      delete item.id
-      products = products.concat(item)
-      //update JSONWebToken
-      window.localStorage.setItem('loggedUser', JSON.stringify({ ...state, favoriteProducts: products }))
-      return { ...state, addedProducts: products }
+      //Create the new product list for state
+      //console.log('state.favoriteproducts::::', state.favoriteProducts)
+      //let products = state.favoriteProducts.slice()
+      //products = products.concat(action.data)
+      //console.log('eproducts::::', products)
+      //Update JSONWebToken:
+      //window.localStorage.setItem('loggedUser', JSON.stringify({ ...state, favoriteProducts: products }))
+      return { ...state }
     }
     default:
       return state
@@ -102,11 +100,17 @@ export const logout = () => {
 export const addProductToFavorites = (product, user) => {
   return async (dispatch) => {
     //Save the favorited product for the user:
-    let fav = [ ...user.favoriteProducts, product ]
-    user.favoriteProducts = fav
-    console.log('loginreducer user', user)
-    userService.update(user.id, user)
-    //update user in login and userreducer
+    //rename id field to _id:
+    product._id = product.id
+    delete product.id
+    //Remake favoriteproducts for saving:
+    let favorites = user.favoriteProducts.map(p => p._id)
+    favorites.push(product._id)
+    user.favoriteProducts = favorites
+
+    let user2 = await userService.update(user.id, user)
+    //Repopulate user's favorite product list:
+    user.favoriteProducts = user2.favoriteProducts
     dispatch({
       type: 'ADD_PRODUCT_TO_FAVORITES',
       data: product

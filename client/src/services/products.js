@@ -36,6 +36,12 @@ const update = async (id, newObject) => {
   return response.data
 }
 
+// const updateFavorites = async (id, newObject, favoriteId) => {
+//   config.headers = { ...config.headers, 'addFavorite': favoriteId }
+//   const response = await axios.put(`${baseUrl}/${id}`, newObject)
+//   return response.data
+// }
+
 const remove = async (id) => {
   const response = await axios.delete(`${baseUrl}/${id}`)
   return response.data

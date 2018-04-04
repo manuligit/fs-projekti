@@ -114,12 +114,13 @@ usersRouter.put('/:id', async (request, response) => {
         })
         .populate('addedProducts', { id: 1, name: 1 })
         .populate('favoriteProducts', { id: 1, name: 1 })
+
     } else {
       User.findByIdAndUpdate(request.params.id,
         { username: body.username, name: body.name, favoriteProducts: body.favoriteProducts },
         { new: true },
         (err, user) => {
-          if (err) { console.log(err.error), response.status(404).send({ error: 'Id not found' })
+          if (err) { console.log(err), response.status(404).send({ error: 'Id not found' })
           } else {
             return response.json(User.format(user))
           }

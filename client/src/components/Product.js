@@ -24,6 +24,7 @@ const Product = ({ product, deleteProduct, history, createNotification, user, ad
     console.log('klik')
     if (event.target.className === 'fas fa-heart' ) {
       //Unavorite item:
+      console.log('unfavorite')
       event.target.className = 'far fa-heart'
     } else {
       //Favorite item:
@@ -32,14 +33,15 @@ const Product = ({ product, deleteProduct, history, createNotification, user, ad
     }
   }
 
-  console.log('product user', user)
-  console.log(product)
-  let className = 'far fa-heart'
-  // if (user) {
-  //   if (user.favoriteProducst.contains(product.id)) {
-  //     className = 'fas fa-heart'
-  //   }
-  // }
+  //console.log('product user', user)
+  //console.log(product)
+  let className = 'fas fa-heart'
+  if (user) {
+    if (user.favoriteProducts.includes(product.id)) {
+      console.log(user.favoriteProducts.includes(product.id))
+      className = 'far fa-heart'
+    }
+  }
   //if user has logged in, show favorite icon
   //if user has product favorited, change the className to favorited:
 
