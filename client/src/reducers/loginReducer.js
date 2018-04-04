@@ -101,11 +101,12 @@ export const addProductToFavorites = (product, user) => {
   return async (dispatch) => {
     //Save the favorited product for the user:
     //rename id field to _id:
-    product._id = product.id
-    delete product.id
+    let item = { ...product }
+    item._id = item.id
+    delete item.id
     //Remake favoriteproducts for saving:
     let favorites = user.favoriteProducts.map(p => p._id)
-    favorites.push(product._id)
+    favorites.push(item._id)
     user.favoriteProducts = favorites
 
     let user2 = await userService.update(user.id, user)

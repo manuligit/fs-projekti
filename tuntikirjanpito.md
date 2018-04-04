@@ -23,5 +23,8 @@
 | 29.3. | 2 | Käyttäjien api-testejä jatkettu |
 | 30.3. | 1 | Käyttäjän päivitys kontrolleriin + api-testit aloitettu |
 | yht   | 35   | |
+| 3.4. | 1 | Käyttäjän rekisteröinti onnistuu frontin kautta |
+| 3.4. | 2 | Käyttäjän tietojen päivitys onnistuu frontin kautta |
+| 4.4. | 2,5 | Käyttäjän suosikkien lisäysominaisuuden lisääminen toimii melkein |
 ||||
 | yht   | 35   | |
