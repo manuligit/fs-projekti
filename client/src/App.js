@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { initializeProducts, deleteProduct } from './reducers/productReducer'
 import { createNotification } from './reducers/notificationReducer'
-import { login, authenticateUser, logout, addProductToFavorites } from './reducers/loginReducer'
+import { login, authenticateUser, logout, addProductToFavorites, removeProductFromFavorites } from './reducers/loginReducer'
 import { initializeUsers } from './reducers/userReducer'
 import Home from './components/Home'
 import LoginForm from './components/LoginForm'
@@ -60,7 +60,8 @@ class App extends React.Component {
                   productById(match.params.id)
                     ? <Product product={productById(match.params.id)} deleteProduct={this.props.deleteProduct}
                       history={history} createNotification={this.props.createNotification}
-                      user={this.props.user} addProductToFavorites={this.props.addProductToFavorites} />
+                      user={this.props.user} addProductToFavorites={this.props.addProductToFavorites}
+                      remove={this.props.removeProductFromFavorites} />
                     : <Redirect to="/products" />
                 } /> }
               <Route exact path="/login" render={() => <LoginForm login={this.props.login} />} />
@@ -85,7 +86,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   initializeProducts, deleteProduct, createNotification, login, authenticateUser, logout,
-  initializeUsers, addProductToFavorites
+  initializeUsers, addProductToFavorites, removeProductFromFavorites
 }
 
 export default connect (

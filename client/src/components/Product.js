@@ -2,7 +2,7 @@ import React from 'react'
 import Togglable from './Togglable'
 import EditProductForm from './EditProductForm'
 
-const Product = ({ product, deleteProduct, history, createNotification, user, addProductToFavorites }) => {
+const Product = ({ product, deleteProduct, history, createNotification, user, addProductToFavorites, remove }) => {
   const productClick = async (event) => {
     event.preventDefault()
     //Confirm that the user wants to delete the item
@@ -25,21 +25,25 @@ const Product = ({ product, deleteProduct, history, createNotification, user, ad
     if (event.target.className === 'fas fa-heart' ) {
       //Unavorite item:
       console.log('unfavorite')
+      remove(product, user.id)
       event.target.className = 'far fa-heart'
     } else {
       //Favorite item:
-      addProductToFavorites(product, user)
+      addProductToFavorites(product, user.id)
       event.target.className = 'fas fa-heart'
     }
   }
 
   //console.log('product user', user)
   //console.log(product)
-  let className = 'fas fa-heart'
+  let className = 'far fa-heart'
   if (user) {
-    if (user.favoriteProducts.includes(product.id)) {
-      console.log(user.favoriteProducts.includes(product.id))
-      className = 'far fa-heart'
+    //console.log(user.favoriteProducts)
+    //console.log(product.id)
+    //console.log(user.favoriteProducts.find(p => p._id === product.id))
+    if (user.favoriteProducts.find(p => p._id === product.id) !== undefined) {
+      //console.log(user.favoriteProducts.includes(product.id))
+      className = 'fas fa-heart'
     }
   }
   //if user has logged in, show favorite icon

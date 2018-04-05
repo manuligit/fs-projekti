@@ -18,8 +18,8 @@ class EditUserForm extends React.Component {
   }
 
   render() {
-    console.log('edituser **********************')
-    console.log(this.props.user)
+    //console.log('edituser **********************')
+    //console.log(this.props.user)
     return (
       <div>
         <h3>Edit user info</h3>

@@ -49,13 +49,19 @@ const loginReducer = (state = null, action) => {
     }
     case 'ADD_PRODUCT_TO_FAVORITES': {
       //Create the new product list for state
-      //console.log('state.favoriteproducts::::', state.favoriteProducts)
-      //let products = state.favoriteProducts.slice()
-      //products = products.concat(action.data)
-      //console.log('eproducts::::', products)
+      console.log('state.favoriteproducts::::', state.favoriteProducts)
+      let products = state.favoriteProducts.slice()
+      products = products.concat(action.data)
+      console.log('eproducts::::', products)
       //Update JSONWebToken:
-      //window.localStorage.setItem('loggedUser', JSON.stringify({ ...state, favoriteProducts: products }))
-      return { ...state }
+      window.localStorage.setItem('loggedUser', JSON.stringify({ ...state, favoriteProducts: products }))
+      return { ...state, favoriteProducts: products }
+    }
+    case 'REMOVE_PRODUCT_FROM_FAVORITES': {
+      let products = state.favoriteProducts.filter(p => p._id !== action.data)
+      window.localStorage.setItem('loggedUser', JSON.stringify({ ...state, favoriteProducts: products }))
+      console.log('redurec remove from favorites')
+      return { ...state, favoriteProducts: products }
     }
     default:
       return state
@@ -97,24 +103,34 @@ export const logout = () => {
   }
 }
 
-export const addProductToFavorites = (product, user) => {
+export const addProductToFavorites = (product, id) => {
   return async (dispatch) => {
     //Save the favorited product for the user:
-    //rename id field to _id:
-    let item = { ...product }
-    item._id = item.id
-    delete item.id
-    //Remake favoriteproducts for saving:
+    //Edit product to the format in the populated list:
+    let item = { _id: product.id, name: product.name }
+    const user = await userService.getOne(id)
     let favorites = user.favoriteProducts.map(p => p._id)
     favorites.push(item._id)
     user.favoriteProducts = favorites
-
-    let user2 = await userService.update(user.id, user)
-    //Repopulate user's favorite product list:
-    user.favoriteProducts = user2.favoriteProducts
+    await userService.update(id, user)
     dispatch({
       type: 'ADD_PRODUCT_TO_FAVORITES',
-      data: product
+      data: item
+    })
+  }
+}
+
+export const removeProductFromFavorites = (product, id) => {
+  return async (dispatch) => {
+    const user = await userService.getOne(id)
+    let favorites = user.favoriteProducts.map(p => p._id)
+    favorites = favorites.filter(p => p !== product.id)
+    user.favoriteProducts = favorites
+
+    await userService.update(id, user)
+    dispatch({
+      type: 'REMOVE_PRODUCT_FROM_FAVORITES',
+      data: product.id
     })
   }
 }
