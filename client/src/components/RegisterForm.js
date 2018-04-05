@@ -20,7 +20,7 @@ class RegisterForm extends React.Component {
       <div>
         <h3>Register</h3>
         <form onSubmit={this.addUser}>
-          <div> Username <input type="username" name="username" required/> </div>
+          <div> Username <input type="username" name="username" minLength="3" required/> </div>
           <div> Name <input type="text" name="name" required/> </div>
           <div> Password <input type="password" name="password" minLength="8" required/> </div>
           <button> Create user </button>

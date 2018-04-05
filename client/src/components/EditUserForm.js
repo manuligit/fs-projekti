@@ -26,7 +26,7 @@ class EditUserForm extends React.Component {
         <form onSubmit={this.editUser}>
           <div> Name <input name="name" type="text" defaultValue={this.props.user.name}/> </div>
           <div> Username <input name="username" type="text" defaultValue={this.props.user.username}/> </div>
-          <div> Password <input name="password" type="password" /> </div>
+          <div> Password <input name="password" type="password" minLength="8" /> </div>
           <button>Edit</button>
         </form> <br />
       </div>

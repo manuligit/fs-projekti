@@ -13,7 +13,11 @@ const User = ({ user }) => {
       </Togglable>
       {user.favoriteProducts && <div>You <i className='fas fa-heart' /> {user.favoriteProducts.length} products</div>}
       {user.favoriteProducts &&
-      user.favoriteProducts.map(product => <li key={product._id+'fav'}>{product.name}</li>)}
+      user.favoriteProducts.map(product =>
+        <li key={product._id+'fav'}>
+          <Link to={`/products/${product._id}`}>{product.name}</Link>
+        </li>
+      )}
 
       {user.addedProducts &&
         <div>You have added {user.addedProducts.length} products</div>}

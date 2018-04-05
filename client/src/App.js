@@ -19,22 +19,17 @@ class App extends React.Component {
     console.log('mounted')
     this.props.initializeProducts()
     this.props.initializeUsers()
-    //console.log(this.props.products)
 
     const loggedUserJSON = window.localStorage.getItem('loggedUser')
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
-      //console.log('app.js componentwillmount user: ', user)
-      //const propsuser = this.props.user
-      //console.log('this.props user: ', this.props.user)
-
       this.props.authenticateUser(user)
     }
   }
 
   render() {
     const productById = (id) => this.props.products.find(item => item.id === id)
-
+    
     //Do not render single product screen unless the props are fully loaded
     return (
       <div className="App">
@@ -50,7 +45,7 @@ class App extends React.Component {
               {this.props.user === null && <Link to="/register">register</Link>}
             </div>
             <Notification message={this.props.notification} />
-            <h1>Tuotteet</h1>
+            <h1>Ostoskori</h1>
             <Switch>
               <Route exact path="/" render={() => <Home user={this.props.user}/>} />
               <Route exact path="/products" render={() => <ProductList />} />
@@ -64,9 +59,10 @@ class App extends React.Component {
                       remove={this.props.removeProductFromFavorites} />
                     : <Redirect to="/products" />
                 } /> }
-              <Route exact path="/login" render={() => <LoginForm login={this.props.login} />} />
-              <Route exact path="/register" render={() => <RegisterForm/>} />
-
+              {this.props.user === null &&
+                <Route exact path="/login" render={() => <LoginForm login={this.props.login} />} /> }
+              {this.props.user === null &&
+                <Route exact path="/register" render={() => <RegisterForm/>} /> }
             </Switch>
           </div>
         </Router>
