@@ -50,7 +50,7 @@ const loginReducer = (state = null, action) => {
     case 'ADD_PRODUCT_TO_FAVORITES': {
       //Create the new product list for state
       console.log('state.favoriteproducts::::', state.favoriteProducts)
-      let products = state.favoriteProducts.slice()
+      let products = (state.favoriteProducts || []).slice()
       products = products.concat(action.data)
       console.log('eproducts::::', products)
       //Update JSONWebToken:

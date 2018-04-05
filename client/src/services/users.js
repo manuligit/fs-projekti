@@ -36,13 +36,12 @@ const create = async (newObject) => {
 }
 
 const update = async (id, newObject) => {
-  console.log('userService id, newObject:', id, newObject)
   const response = await axios.put(`${baseUrl}/${id}`, newObject, config)
-  console.log('response data :::: ', response.data)
   return response.data
 }
 
 const remove = async (id) => {
+  console.log(config)
   const response = await axios.delete(`${baseUrl}/${id}`, config)
   return response.data
 }

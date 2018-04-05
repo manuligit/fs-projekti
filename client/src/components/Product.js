@@ -21,33 +21,27 @@ const Product = ({ product, deleteProduct, history, createNotification, user, ad
 
   const favorite = async (event) => {
     event.preventDefault()
-    console.log('klik')
     if (event.target.className === 'fas fa-heart' ) {
       //Unavorite item:
-      console.log('unfavorite')
       remove(product, user.id)
       event.target.className = 'far fa-heart'
+      createNotification(`Unfavorited ${product.name}`)
+
     } else {
       //Favorite item:
       addProductToFavorites(product, user.id)
       event.target.className = 'fas fa-heart'
+      createNotification(`Favorited ${product.name}`)
     }
   }
 
-  //console.log('product user', user)
-  //console.log(product)
   let className = 'far fa-heart'
   if (user) {
-    //console.log(user.favoriteProducts)
-    //console.log(product.id)
-    //console.log(user.favoriteProducts.find(p => p._id === product.id))
-    if (user.favoriteProducts.find(p => p._id === product.id) !== undefined) {
-      //console.log(user.favoriteProducts.includes(product.id))
+    //If user has favorited the product, show full heart icon:
+    if (user.favoriteProducts && user.favoriteProducts.find(p => p._id === product.id) !== undefined) {
       className = 'fas fa-heart'
     }
   }
-  //if user has logged in, show favorite icon
-  //if user has product favorited, change the className to favorited:
 
   return (
     <div>

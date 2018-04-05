@@ -42,7 +42,8 @@ export const createUser = (name, username, password) => {
 
 export const updateUser = (id, name, username, password) => {
   return async (dispatch) => {
-    const content = { name: name, username: username, password: password }
+    const user = await userService.getOne(id)
+    const content = { ...user, name: name, username: username, password: password }
     const updatedUser = await userService.update(id, content)
     dispatch({
       type: 'UPDATE_USER',
