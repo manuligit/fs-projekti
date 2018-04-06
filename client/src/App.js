@@ -35,16 +35,16 @@ class App extends React.Component {
         <Router>
           <div>
             <div className="header">
-              <Link to="/">home</Link> &nbsp;
-              <Link to="/products">products</Link> &nbsp;
-              {this.props.user && <Link to="/products/new">new product</Link>} &nbsp;
-              {this.props.user && this.props.user.username}
+              <Link to="/"><i className="fas fa-home fa-lg"></i>Home</Link>
+              <Link to="/products"> <i className="fas fa-shopping-cart fa-lg"></i> Products</Link>
+              {this.props.user && <Link to="/products/new"> <i className="fas fa-cart-plus fa-lg"></i> New product</Link>}
+              {this.props.user && <div> <i className="fas fa-user fa-lg"></i> {this.props.user.username} </div> }
               {this.props.user && <button onClick={this.props.logout}>log out</button>}
-              {this.props.user === null && <Link to="/login">login</Link>}
-              {this.props.user === null && <Link to="/register">register</Link>}
+              {this.props.user === null && <Link to="/login"><i className="fas fa-user fa-lg"></i> Login</Link>} &nbsp;
+              {this.props.user === null && <Link to="/register"><i className="far fa-user fa-lg"></i>Register</Link>}
             </div>
+            <div className='pagetitle'>Ostoskori</div>
             <Notification message={this.props.notification} />
-            <i className="fas fa-shopping-cart">  </i><h1 style={{ display:'inline' }}>  Ostoskori</h1>
             <Switch>
               <Route exact path="/" render={() => <Home user={this.props.user}/>} />
               <Route exact path="/products" render={() => <ProductList />} />

@@ -5,7 +5,10 @@ const Home = ({ user }) => {
   if (user === null) {
     return (
       <div>
-        <h2>Welcome to the Home page of the app!</h2>
+        <h2>Welcome to the Ostoskori of the app!</h2>
+        <p> Here you can view products and if you register, you can add new products and add existing products
+            to your favourites.
+        </p>
       </div>
     )
   } else {

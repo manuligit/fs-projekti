@@ -45,8 +45,7 @@ const Product = ({ product, deleteProduct, history, createNotification, user, ad
 
   return (
     <div>
-      <h2>{product.name}</h2>
-      { user && <i onClick={favorite} className={className}></i>} <br />
+      <h2 className='productname'>{product.name}  { user && <i onClick={favorite} className={className}></i>}</h2> <br />
       Category: {product.category} <br />
       Price: {product.price} <br />
       <Togglable buttonLabel="edit">

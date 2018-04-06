@@ -1,42 +1,85 @@
+* {
+  box-sizing: border-box;
+}
+
+/**
+
+  border: 1px solid red
+
+**/
 .fa-heart {
-  font-size: 25px;
+  font-size: 20px;
 	color:red;
+}
+
+.pagetitle {
+  font-family: 'Pacifico', cursive;
+  font-size: 3.5em;
+  border-bottom: 4px solid black;
+  border-bottom-style: dashed;
+  border-bottom-left-radius: 10%;
+  background-color: rgba(255, 106, 131, 0.47);
+  border-bottom-right-radius: 8%;
+  padding-bottom: 5px;
+  padding-top: 10px;
 }
 
 body {
   margin: 0 auto;
-  background-color: red;
+  background-color: pink;
   padding: 0 20px 20px 20px;
   border: 5px solid black;
-  font-family: "Comic Sans MS";
-  color: blue
+  font-family: 'Tinos', serif;
 }
 
 li {
-  font-style: italic;
-  color: #F70
+  color: rgb(57, 17, 51)
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgba(255, 106, 131, 0.47);
+  font-family: 'Tinos', serif;
+}
+
+.header a {
+  width: 15%;
+  padding: 1em;
+  text-decoration: none;
 }
 
 a {
   font-style: italic;
-  color: #89a203
+  color: black
 }
 
-.header {
-  -webkit-animation: rotate-left 1s linear infinite normal;
-  margin: 0 auto;
-  background-color: yellowgreen;
-  padding: 0 20px 20px 20px;
-  border: 5px solid black;
-
+.productname {
+  display: block
 }
 
-* {
-  -webkit-animation: rotate-right 10000s linear infinite normal;
-  border: 1px solid green
+form {
+  background-color: rgba(255, 255, 255, 0.483); 
 }
 
+Link {
+  border: 3px solid black
+}
+
+.notification {
+  background-color: rgba(255, 255, 255, 0.5); 
+  border: 5px dotted rgba(255, 106, 131, 0.47);
+  border-radius: 10%;
+  font-size: 1.5em;
+  font-family: 'Tinos', serif;
+}
+
+/**
 @-webkit-keyframes rotate-right {
+  -webkit-animation: rotate-right 10000s linear infinite normal;
   from{
     -webkit-transform: rotate(0deg);
   }
@@ -52,3 +95,4 @@ a {
     -webkit-transform: rotate(1deg);
   }
 }
+**/
