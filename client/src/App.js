@@ -34,7 +34,7 @@ class App extends React.Component {
       <div className="App">
         <Router>
           <div>
-            <div>
+            <div className="header">
               <Link to="/">home</Link> &nbsp;
               <Link to="/products">products</Link> &nbsp;
               {this.props.user && <Link to="/products/new">new product</Link>} &nbsp;
@@ -44,7 +44,7 @@ class App extends React.Component {
               {this.props.user === null && <Link to="/register">register</Link>}
             </div>
             <Notification message={this.props.notification} />
-            <h1>Ostoskori</h1>
+            <i className="fas fa-shopping-cart">  </i><h1 style={{ display:'inline' }}>  Ostoskori</h1>
             <Switch>
               <Route exact path="/" render={() => <Home user={this.props.user}/>} />
               <Route exact path="/products" render={() => <ProductList />} />

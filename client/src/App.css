@@ -2,3 +2,53 @@
   font-size: 25px;
 	color:red;
 }
+
+body {
+  margin: 0 auto;
+  background-color: red;
+  padding: 0 20px 20px 20px;
+  border: 5px solid black;
+  font-family: "Comic Sans MS";
+  color: blue
+}
+
+li {
+  font-style: italic;
+  color: #F70
+}
+
+a {
+  font-style: italic;
+  color: #89a203
+}
+
+.header {
+  -webkit-animation: rotate-left 1s linear infinite normal;
+  margin: 0 auto;
+  background-color: yellowgreen;
+  padding: 0 20px 20px 20px;
+  border: 5px solid black;
+
+}
+
+* {
+  -webkit-animation: rotate-right 10000s linear infinite normal;
+  border: 1px solid green
+}
+
+@-webkit-keyframes rotate-right {
+  from{
+    -webkit-transform: rotate(0deg);
+  }
+  to{
+    -webkit-transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes rotate-left {
+  from{
+    -webkit-transform: rotate(360deg);
+  }
+  to{
+    -webkit-transform: rotate(1deg);
+  }
+}
