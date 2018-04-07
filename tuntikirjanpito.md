@@ -26,5 +26,7 @@
 | 3.4.  | 1    | Käyttäjän rekisteröinti onnistuu frontin kautta |
 |       | 2    | Käyttäjän tietojen päivitys onnistuu frontin kautta |
 | 4.4.  | 2,5  | Käyttäjän suosikkien lisäysominaisuuden lisääminen toimii melkein |
+| 5.4.  | 1,5  | Käyttäjä pystyy lisämämään ja poistamaan suosikkejaan |
+| 6.4.  | 2   | Frontendin tyylittelyä css:llä |
 ||||
 | yht   | 40,5   | |
