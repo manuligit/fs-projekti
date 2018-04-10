@@ -28,5 +28,6 @@
 | 4.4.  | 2,5  | Käyttäjän suosikkien lisäysominaisuuden lisääminen toimii melkein |
 | 5.4.  | 1,5  | Käyttäjä pystyy lisämämään ja poistamaan suosikkejaan |
 | 6.4.  | 2   | Frontendin tyylittelyä css:llä |
+| 9.4. | 1 | Käännösten tutkimista |
 ||||
 | yht   | 44   | |
