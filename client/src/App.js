@@ -40,7 +40,7 @@ class App extends React.Component {
               {this.props.user && <Link to="/products/new"> <i className="fas fa-cart-plus fa-lg"></i> New product</Link>}
               {this.props.user && <div> <i className="fas fa-user fa-lg"></i> {this.props.user.username} </div> }
               {this.props.user && <button onClick={this.props.logout}>log out</button>}
-              {this.props.user === null && <Link to="/login"><i className="fas fa-user fa-lg"></i> Login</Link>} &nbsp;
+              {this.props.user === null && <Link to="/login"><i className="fas fa-user fa-lg"></i> Login</Link>}
               {this.props.user === null && <Link to="/register"><i className="far fa-user fa-lg"></i>Register</Link>}
             </div>
             <div className='pagetitle'>Ostoskori</div>
