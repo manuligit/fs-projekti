@@ -29,5 +29,6 @@
 | 5.4.  | 1,5  | Käyttäjä pystyy lisämämään ja poistamaan suosikkejaan |
 | 6.4.  | 2   | Frontendin tyylittelyä css:llä |
 | 9.4. | 1 | Käännösten tutkimista |
+| 10.4. | 1 | Käännösten tutkimisen jatkaminen ja testailu |
 ||||
 | yht   | 44   | |
